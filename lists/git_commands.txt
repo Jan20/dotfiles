@@ -1,0 +1,20 @@
+git init
+git clone <repository>
+git status
+git add <file>
+git commit -m "<message>"
+git push <remote> <branch>
+git pull <remote> <branch>
+git fetch <remote>
+git branch
+git checkout <branch>
+git merge <branch>
+git log
+git diff
+git reset <file>
+git rm <file>
+git stash
+git stash pop
+git remote -v
+git tag <tag-name>
+
