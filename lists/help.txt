@@ -1,5 +1,5 @@
 ff # Open file with VIM
 f # Open directory
-dd # Execute past command
+dd # Execute past commands
 jj # List and execute common commands
 gg # List and execute Git commands
