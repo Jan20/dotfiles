@@ -1,0 +1,4 @@
+vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/terraform.txt	# EDIT
+terraform init									# INIT
+terraform plan									# PLAN
+terraform apply									# APPLY

@@ -1,19 +1,12 @@
-# Searches and opens a directory
-open_dir() {
-   local DIRECTORY=$(find . -type d ! -path '*/.git/*' ! -path '*/google-cloud-sdk/*' ! -path '*/venv/*' ! -path '*/node_modules/*' ! -path '*/.angular/*' | fzf)
-   [[ -n "$DIRECTORY" ]] && cd "$DIRECTORY"
-}
-alias f=open_dir
-
-# Open a local file
-function open_local_file {
-  local FILE=$(find . ! -path '*/.angular/*' ! -path '*/node_modules/*' ! -path '*/venv/*' ! -path '*/.git/*' | fzf --preview='bat --color=always {}') 
-  [ -n "$FILE" ] && vim "$FILE"
-}
-alias ff=open_local_file
-
-alias dd='eval $(cat ~/.zsh_history | fzf)'
+alias ff='vim $(find . -maxdepth 1 -type f | fzf --preview="bat --color=always {}")'
+alias hh='eval $(cat ~/.zsh_history | fzf)'
+alias dd='eval $(cat ~/Developer/tools/terminal-setup/lists/docker.txt | fzf)'
 alias jj='eval $(cat ~/Developer/tools/terminal-setup/lists/commands.txt | fzf)'
+alias k='eval $(cat ~/Developer/tools/terminal-setup/lists/terraform.txt | fzf)'
 alias gg='eval $(cat ~/Developer/tools/terminal-setup/lists/git_commands.txt | fzf)'
 alias ll='eval $(cat ~/Developer/tools/terminal-setup/lists/web-pages.txt | fzf)'
+alias a='eval $(cat ~/Developer/tools/terminal-setup/lists/applications.txt | fzf)'
 alias help='eval $(cat ~/Developer/tools/terminal-setup/lists/help.txt | fzf)'
+alias f='cd $(find . -maxdepth 2 -type d | fzf)'
+alias o='vim $(find . -type f -name "*.md" | fzf)'
+alias co='code $(find . -type f | fzf --preview="bat --color=always {}")'

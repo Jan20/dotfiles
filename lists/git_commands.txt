@@ -1,10 +1,11 @@
 git init
+git log --oneline
 git clone <repository>
 git status
 git add <file>
 git commit -m "<message>"
-git push <remote> <branch>
-git pull <remote> <branch>
+git push
+git pull
 git fetch <remote>
 git branch
 git checkout <branch>
