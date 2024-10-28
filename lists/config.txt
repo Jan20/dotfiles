@@ -1,0 +1,6 @@
+vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/config.txt			# EDIT
+source ~/.zshrc											# UPDATE
+vim ~/.vimrc											# VIM
+vim ~/.zshrc 											# CONFIG
+vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/dot-files/prompt			# PROMT
+vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/dot-files/commands			# COMMANDS

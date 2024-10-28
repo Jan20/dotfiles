@@ -1,12 +1,7 @@
-vim ~/Developer/tools/terminal-setup/dot-files/.zshrc
-vim ~/.zshrc
-vim ~/Developer/tools/terminal-setup/lists/commands.txt
-vim ~/Developer/tools/terminal-setup/lists/web-pages.txt
+vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/commands.txt	# EDIT
+realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy					# REAL PATH
+cd ~/Developer/tools/terminal-setup/lists					# LISTS
+cd ~/Developer/tools/terminal-setup/dot-files					# DOTFILES
 system_profiler SPSoftwareDataType SPHardwareDataType
-docker stop $(docker ps -q) && docker rm $(docker ps -a -q)
-source venv/bin/activate
-npm run start:ssr
-ng serve
-npm i --legacy-peer-deps
-source ~/.zshrc
-exit
+source .env									# SOURCE
+echo "![TEXT](assets/posts/.png)" | pbcopy					# INSERT IMAGE

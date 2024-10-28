@@ -1,4 +1,5 @@
 vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/docker.txt			# EDIT
+cd docker && docker-compose -f docker-compose.yml up -d						# DOCKER COMPOSE
 docker images											# IMAGES
 docker stop $(docker ps -q) && docker rm $(docker ps -a -q)					# REMOVE CONTAINERS
 docker compose down										# COMPOSE DOWN

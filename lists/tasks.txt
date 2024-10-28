@@ -1,0 +1,2 @@
+vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/tasks.txt			# EDIT
+- Add dark mode

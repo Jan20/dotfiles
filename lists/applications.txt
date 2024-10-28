@@ -5,8 +5,8 @@ open -a reminders                                                               
 open -a Photos                                                                      	# PHOTOS
 open -a Brave\ Browser                                                             	# BRAVE
 open -a Spotify                                                                    	# SPOTIFY
-osascript -e '\'tell application "Spotify" to pause					# SPOTIFY PAUSE
-osascript -e '\'tell application "Spotify" to play					# SPOTIFY PLAY
+osascript -e 'tell application "Spotify" to pause'					# SPOTIFY PAUSE
+osascript -e 'tell application "Spotify" to play'					# SPOTIFY PLAY
 open -a mail										# MAIL
 open -a messages									# MESSAGES
 open -a Postman										# POSTMAN

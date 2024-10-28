@@ -1,0 +1,28 @@
+alias ff='vim $(find . -type d \( -name node_modules -o -name target -o -name .git \) -prune -o -type f ! -name "*.png" | fzf --preview="bat --color=always {}")'
+alias hh='eval $(cat ~/.zsh_history | fzf)'
+alias dd='eval $(cat ~/Developer/tools/terminal-setup/lists/docker.txt | fzf)'
+alias j='eval $(cat ~/Developer/tools/terminal-setup/lists/commands.txt | fzf)'
+alias k='eval $(cat ~/Developer/tools/terminal-setup/lists/terraform.txt | fzf)'
+alias g='eval $(cat ~/Developer/tools/terminal-setup/lists/git.txt | fzf)'
+alias gg='eval $(cat ~/Developer/tools/terminal-setup/lists/gcloud.txt | fzf)'
+alias m='eval $(cat ~/Developer/tools/terminal-setup/lists/python.txt | fzf)'
+alias t='eval $(cat ~/Developer/tools/terminal-setup/lists/tasks.txt | fzf)'
+alias n='eval $(cat ~/Developer/tools/terminal-setup/lists/npm.txt | fzf)'
+alias l='eval $(cat ~/Developer/tools/terminal-setup/lists/web-pages.txt | fzf)'
+alias a='eval $(cat ~/Developer/tools/terminal-setup/lists/applications.txt | fzf)'
+alias h='eval $(cat ~/Developer/tools/terminal-setup/dot-files/commands | fzf)'		# LIST COMMANDS
+alias a='eval $(cat ~/Developer/tools/terminal-setup/lists/applications.txt | fzf)'
+alias f='cd $(find ~/Developer -maxdepth 2 -type d \( -name tools \) -prune -o -type d | fzf)'
+alias s='cd $(find . -type d \( -name tools -o -name .angular -o -name .git -o -name node_modules \) -prune -o -type d | fzf)'
+alias o='vim $(find . -type f -name "*.md" | fzf)'
+alias co='code $(find . -type f | fzf --preview="bat --color=always {}")'
+alias v='eval $(cat ~/Developer/tools/terminal-setup/lists/config.txt | fzf)'
+alias ö='open -a ChatGPT'								# CHATGPT
+alias p="osascript -e 'tell application \"Spotify\" to playpause'"
+alias c='clear'
+alias d='cd ~/Developer'
+alias de='cd ~/Desktop'
+alias do='cd ~/Documents'
+alias b='cd ~/Developer/blog'
+alias blog='cd ~/Developer/blog'
+alias u='source ~/.zshrc'								# SOURCE ZSHRC

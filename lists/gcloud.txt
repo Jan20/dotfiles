@@ -1,0 +1,7 @@
+vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/gcloud.txt	# EDIT
+gcloud builds submit --config cloudbuild.yaml					# BUILD
+gcloud auth login								# GCLOUD AUTH
+export GCLOUD_ENABLED=$((1 - GCLOUD_ENABLED))					# TOGGLE GCLOUD
+gcloud run services list --platform managed --format="value(metadata.name)" 	# GET SERVICES
+gcloud config set run/region europe-west3 # Set a default region
+

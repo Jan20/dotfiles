@@ -1,0 +1,28 @@
+vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/git.txt				# EDIT
+open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/")		# GO TO PULL PROJECT
+open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/pulls")	# GO TO PULL REQUESTS
+open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/actions")	# GO TO PULL ACTIONS
+open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/release")	# GO TO PULL RELEASES
+git remote get-url origin | xargs -I {} echo -n {} | pbcopy					# ORIGIN
+git reset --soft HEAD^										# SOFT RESET
+echo -n "Commit Message: " && read MESSAGE && git commit -m "$MESSAGE"				# COMMIT
+git log --oneline
+git commit --amend										# AMEND
+git clone <repository>
+git status
+git add <file>
+git push											# PUSH
+git pull
+git fetch <remote>
+git branch
+git checkout <branch>
+git merge <branch>
+git log
+git diff
+git reset <file>
+git rm <file>
+git stash
+git stash pop
+git remote -v
+git tag <tag-name>
+git add .											# ADD ALL
