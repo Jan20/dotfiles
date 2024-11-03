@@ -1,7 +1,14 @@
 vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/docker.txt			# EDIT
+docker logs $(basename $PWD)									# GET LOGS
+docker kill $(docker ps --quiet)								# KILL CONTAINERS
+docker exec -it $(basename $PWD) /bin/sh							# OPEN SHELL
+docker run -d -p 8080:80 --name $(basename $PWD) "$(basename $PWD):latest"			# RUN CONTAINER
+docker rmi $(docker images --quiet)								# REMOVE ALL IMAGES
+docker build --progress=plain -t "$(basename $PWD):latest" .					# BUILD IMAGE
 cd docker && docker-compose -f docker-compose.yml up -d						# DOCKER COMPOSE
-docker images											# IMAGES
-docker stop $(docker ps -q) && docker rm $(docker ps -a -q)					# REMOVE CONTAINERS
+docker images											# LIST IMAGES
+docker stop $(docker ps -q)									# STOP CONTAINERS
+docker rm -f $(docker ps -a -q)									# REMOVE CONTAINERS
 docker compose down										# COMPOSE DOWN
 docker volume ls										# LIST VOLUMES
 docker volume prune										# PRUNE

@@ -1,4 +1,5 @@
 vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/npm.txt		# EDIT
+npm run build:ssr								# BUILD SSR
 npm i --verbose									# INSTALL
 npm run build									# BUILD
 npm ci && npm run build								# NPM CI

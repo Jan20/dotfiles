@@ -1,4 +1,12 @@
 vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/terraform.txt	# EDIT
+terraform destroy								# DESTROY
 terraform init									# INIT
 terraform plan									# PLAN
 terraform apply									# APPLY
+terraform validate								# VALIDATE SYNTAX
+terraform fmt									# FORMAT
+terraform output								# DISPLAY OUTPUT
+terraform state
+terraform taint
+terraform show
+terraform graph

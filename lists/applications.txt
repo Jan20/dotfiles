@@ -1,4 +1,5 @@
 vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/applications.txt	# EDIT
+open -a Calendar									# CALENDAR
 open -a Docker										# DOCKER
 open -a safari						                                # SAFARI
 open -a reminders                                                                   	# REMINDERS
@@ -10,6 +11,6 @@ osascript -e 'tell application "Spotify" to play'					# SPOTIFY PLAY
 open -a mail										# MAIL
 open -a messages									# MESSAGES
 open -a Postman										# POSTMAN
-open -a /Users/jan/Applications/PyCharm\ Community\ Edition.app .			# PYCHARM
+open -a ~/Applications/PyCharm\ Community\ Edition.app .			# PYCHARM
 open -a books										# BOOKS
 open -a ChatGPT										# CHATGPT
