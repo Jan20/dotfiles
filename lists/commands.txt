@@ -1,7 +1,10 @@
 vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/commands.txt	# EDIT
+~/Developer/tools/terminal-setup/scripts/dark-mode.sh				# DARK MODE
+chmod +x $(find . -maxdepth 1 | fzf)						# CHANGEMODE
 realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy					# REAL PATH
 cd ~/Developer/tools/terminal-setup/lists					# LISTS
 cd ~/Developer/tools/terminal-setup/dot-files					# DOTFILES
+cd ~/Developer/tools/terminal-setup/scripts					# SCRIPTS
 system_profiler SPSoftwareDataType SPHardwareDataType				# INFORMATION
 source .env									# SOURCE
 echo "![TEXT](assets/posts/.png)" | pbcopy					# INSERT IMAGE
