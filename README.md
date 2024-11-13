@@ -1,6 +1,6 @@
 # Dotfile Repository
 
-This repository contains a collection of a few dotfiles building the core of my Terminal setup. My setup revolves heavily around fzf and and a range of txt files to store collections of various terminal commands, URLs, and notes. 
+This repository contains a collection of a few dotfiles building the core of my Terminal setup. My setup revolves heavily around fzf and a range of txt files to store collections of various terminal commands, URLs, and notes. If you want to learn more about the thought-process behind this setup, you may want to visit: https://janladicha.de/engineering/efficient-terminal-setup
 
 ## Getting Started
 
