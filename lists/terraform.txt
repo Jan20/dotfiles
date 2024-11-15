@@ -1,4 +1,6 @@
-vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/terraform.txt	# EDIT
+vim -c 'set filetype=bash' ~/Developer/tools/dotfiles/lists/terraform.txt	# EDIT
+terraform providers								# LIST PROVIDERS
+terraform graph | dot -Tpng > graph.png						# GRAPH
 terraform destroy								# DESTROY
 terraform init									# INIT
 terraform plan									# PLAN
@@ -6,7 +8,7 @@ terraform apply									# APPLY
 terraform validate								# VALIDATE SYNTAX
 terraform fmt									# FORMAT
 terraform output								# DISPLAY OUTPUT
-terraform state
+terraform state									# STATE
 terraform taint
 terraform show
-terraform graph
+terraform graph									# GRAPH

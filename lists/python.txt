@@ -1,4 +1,4 @@
-vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/python.txt			# EDIT
+vim -c 'set filetype=bash' ~/Developer/tools/dotfiles/lists/python.txt			# EDIT
 python -m venv venv										# CREATE ENVIRONMENT
 python ~/Developer/blog/scripts/compose.py							# COMPOSE BLOG
 python ~/Developer/blog/scripts/create_sitemap.py						# CREATE SITEMAP

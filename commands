@@ -1,0 +1,29 @@
+alias a='eval $(cat ~/Developer/tools/dotfiles/lists/applications.txt | fzf)'					# APPLICACTIONS
+alias d='eval $(cat ~/Developer/tools/dotfiles/lists/docker.txt | fzf)'						# DOCKER
+alias de='cd ~/Desktop'												# GO TO DESKTOP
+alias c='clear'													# CLEAR TERMINAL
+alias ff='vim $(find . -type d \( -name node_modules -o -name .angular -o -name target -o -name .git \) -prune -o -type f ! -name "*.png" | fzf --preview="bat --color=always {}")'												     # OPEN FILE 
+alias fff='cd $(find ~/Documents -maxdepth 3 -type d | fzf)'                 # SEARCH DOCUMENTS
+alias h='cd ~/Developer'											# GO TO DEVELOPER DIR	
+alias hh='eval $(cat ~/.zsh_history | fzf)'									# HISTORY
+alias i='eval $(cat ~/Developer/tools/dotfiles/lists/terraform.txt | fzf)'					# TERRAFORM
+alias ii='eval $(cat ~/Developer/tools/dotfiles/lists/information.txt | fzf)'					# INFORMATION
+alias j='eval $(cat ~/Developer/tools/dotfiles/lists/commands.txt | fzf)'					# GENERAL COMMANDS
+alias g='eval $(cat ~/Developer/tools/dotfiles/lists/git.txt | fzf)'						# GIT
+alias gg='eval $(cat ~/Developer/tools/dotfiles/lists/gcloud.txt | fzf)'					# GCLOUD
+alias n='eval $(cat ~/Developer/tools/dotfiles/lists/npm.txt | fzf)'						# NPM
+alias nn='vim -c "set filetype=markdown" ~/Developer/tools/dotfiles/lists/notes.txt' 				# NOTES
+alias mark='echo $PWD | pbcopy'											# COPY 
+alias o='directory="${1:-.}"; [ -f "$directory/pom.xml" ] && idea "$directory" || code "$directory"'		# OPEN PROJECT
+alias o='[ -f "pom.xml" ] && idea . || { [ -f "requirements.txt" ] || find . -name "*.py" | grep -q .; } && pycharm . || code .'
+alias p='eval $(cat ~/Developer/tools/dotfiles/lists/python.txt | fzf)'						# PYTHON
+alias l='eval $(cat ~/Developer/tools/dotfiles/lists/web-pages.txt | fzf)'					# WEBPAGES
+alias f='cd $(find ~/Developer -maxdepth 2 -type d \( -name tools \) -prune -o -type d | fzf)'			# SEARCH DIRECTORY
+alias s='cd $(find . -type d \( -name .angular -o -name .git -o -name node_modules \) -prune -o -type d | fzf)' # SELECT DIRECTORY
+alias ss='eval $(cat ~/Developer/tools/dotfiles/lists/spotify.txt | fzf)'					# SPOTIFY
+alias t='eval $(cat ~/Developer/tools/dotfiles/lists/tasks.txt | fzf)'						# TASKS
+alias u='source ~/.zshrc'											# SOURCE ZSHRC FILE
+alias v='eval $(cat ~/Developer/tools/dotfiles/lists/config.txt | fzf)'						# CONFIG
+alias ö='open -a ChatGPT'											# CHATGPT
+alias öö='open -a Spotify'											# OPEN SPOTIFY
+alias ..='cd ..'												# RETURN TO PREVIOUS DIR

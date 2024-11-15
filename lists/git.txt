@@ -1,4 +1,4 @@
-vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/git.txt				# EDIT
+vim -c 'set filetype=sh' ~/Developer/tools/dotfiles/lists/git.txt				# EDIT
 open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/")		# GO TO PULL PROJECT
 open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/pulls")	# GO TO PULL REQUESTS
 open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/actions")	# GO TO PULL ACTIONS

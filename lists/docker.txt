@@ -1,4 +1,5 @@
-vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/docker.txt			# EDIT
+vim -c 'set filetype=bash' ~/Developer/tools/dotfiles/lists/docker.txt				# EDIT
+open -a Docker											# START DOCKER
 docker logs $(basename $PWD)									# GET LOGS
 docker kill $(docker ps --quiet)								# KILL CONTAINERS
 docker exec -it $(basename $PWD) /bin/sh							# OPEN SHELL
@@ -13,5 +14,5 @@ docker compose down										# COMPOSE DOWN
 docker volume ls										# LIST VOLUMES
 docker volume prune										# PRUNE
 docker ps											# LIST CONTAINERS
-docker-compose up -d										# COMPOSE UP
+docker compose up -d										# COMPOSE UP
 osascript -e 'quit app "Docker"'								# CLOSE DOCKER

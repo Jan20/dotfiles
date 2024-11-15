@@ -1,10 +1,11 @@
-vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/commands.txt	# EDIT
-~/Developer/tools/terminal-setup/scripts/dark-mode.sh				# DARK MODE
+vim -c 'set filetype=sh' ~/Developer/tools/dotfiles/lists/commands.txt		# EDIT
+basename "$PWD" | pbcopy							# BASENAME
+find . -type f | fzf | pbcopy							# FILENAME
+echo $PWD | pbcopy								# MARK
+top										# GET RESOURCES
+~/Developer/tools/dotfiles/scripts/dark-mode.sh					# DARK MODE
 chmod +x $(find . -maxdepth 1 | fzf)						# CHANGEMODE
 realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy					# REAL PATH
-cd ~/Developer/tools/terminal-setup/lists					# LISTS
-cd ~/Developer/tools/terminal-setup/dot-files					# DOTFILES
-cd ~/Developer/tools/terminal-setup/scripts					# SCRIPTS
 system_profiler SPSoftwareDataType SPHardwareDataType				# INFORMATION
 source .env									# SOURCE
 echo "![TEXT](assets/posts/.png)" | pbcopy					# INSERT IMAGE
