@@ -1,8 +1,8 @@
 vim -c 'set filetype=sh' ~/Developer/tools/dotfiles/lists/git.txt				# EDIT
-open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/")		# GO TO PULL PROJECT
-open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/pulls")	# GO TO PULL REQUESTS
-open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/actions")	# GO TO PULL ACTIONS
-open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/release")	# GO TO PULL RELEASES
+open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/")		# GO TO PROJECT
+open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/pulls")	# GO TO REQUESTS
+open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/actions")	# GO TO ACTIONS
+open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/release")	# GO TO RELEASES
 git remote get-url origin | xargs -I {} echo -n {} | pbcopy					# ORIGIN
 git reset --soft HEAD^										# SOFT RESET
 echo -n "Commit Message: " && read MESSAGE && git commit -m "$MESSAGE"				# COMMIT
