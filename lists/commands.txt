@@ -1,11 +1,13 @@
-vim -c 'set filetype=sh' ~/Developer/tools/dotfiles/lists/commands.txt		# EDIT
-basename "$PWD" | pbcopy							# BASENAME
-find . -type f | fzf | pbcopy							# FILENAME
-echo $PWD | pbcopy								# MARK
-top										# GET RESOURCES
-~/Developer/tools/dotfiles/scripts/dark-mode.sh					# DARK MODE
-chmod +x $(find . -maxdepth 1 | fzf)						# CHANGEMODE
-realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy					# REAL PATH
-system_profiler SPSoftwareDataType SPHardwareDataType				# INFORMATION
-source .env									# SOURCE
-echo "![TEXT](assets/posts/.png)" | pbcopy					# INSERT IMAGE
+vim -c 'set filetype=sh' $DOTFILE_DIR/lists/commands.txt     # EDIT
+
+basename "$PWD" | pbcopy                                     # BASENAME
+find . -type f | fzf | pbcopy                                # FILENAME
+echo $PWD | pbcopy                                           # MARK
+top                                                          # GET RESOURCES
+$DOTFILE_DIR/scripts/dark-mode.sh                            # DARK MODE
+chmod +x $(find . -maxdepth 1 | fzf)                         # CHANGEMODE
+realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy                 # FULL PATH
+system_profiler SPSoftwareDataType SPHardwareDataType        # INFORMATION
+source .env                                                  # SOURCE
+echo "![TEXT](assets/posts/.png)" | pbcopy                   # INSERT IMAGE
+sed -i '' "s/TO_BE_REPLACED/REPLACEMENT/g" FILE.txt          # SED

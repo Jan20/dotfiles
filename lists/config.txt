@@ -1,6 +1,13 @@
-vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/config.txt			# EDIT
-source ~/.zshrc											# UPDATE
-vim ~/.vimrc											# VIM
-vim ~/.zshrc 											# CONFIG
-vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/dot-files/prompt			# PROMT
-vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/dot-files/commands			# COMMANDS
+vim -c 'set filetype=sh' $DOTFILE_DIR/lists/config.txt                              # EDIT
+
+source ~/.zshrc                                                                     # UPDATE
+vim ~/.vimrc                                                                        # VIM
+vim ~/.zshrc                                                                        # CONFIG
+vim -c 'set filetype=sh' $DOTFILE_DIR/prompt                                        # PROMT
+vim -c 'set filetype=sh' $DOTFILE_DIR/commands                                      # COMMANDS
+vim -c 'set filetype=bash' ~/.config/gcloud/configurations/config_default           # GCLOUD CONFIG
+vim -c 'set filetype=bash' ~/.config/gcloud/configurations/config_skillsboost       # SKILLSBOSOT
+cd $DOTFILE_DIR/lists                                                               # LISTS
+cd $DOTFILE_DIR/                                                                    # DOTFILES
+cd $DOTFILE_DIR/scripts                                                             # SCRIPTS
+cd $DOTFILE_DIR/requests                                                            # REQUESTS

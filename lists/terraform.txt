@@ -1,4 +1,5 @@
 vim -c 'set filetype=bash' ~/Developer/tools/dotfiles/lists/terraform.txt	# EDIT
+
 terraform providers								# LIST PROVIDERS
 terraform graph | dot -Tpng > graph.png						# GRAPH
 terraform destroy								# DESTROY
@@ -12,3 +13,4 @@ terraform state									# STATE
 terraform taint
 terraform show
 terraform graph									# GRAPH
+terraform apply -var="region=us-central1" -var="location=us-central1-c"		# APPLY TERRAFORM WITH VARS

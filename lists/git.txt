@@ -1,28 +1,31 @@
-vim -c 'set filetype=sh' ~/Developer/tools/dotfiles/lists/git.txt				# EDIT
-open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/")		# GO TO PROJECT
-open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/pulls")	# GO TO REQUESTS
-open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/actions")	# GO TO ACTIONS
-open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/release")	# GO TO RELEASES
-git remote get-url origin | xargs -I {} echo -n {} | pbcopy					# ORIGIN
-git reset --soft HEAD^										# SOFT RESET
-echo -n "Commit Message: " && read MESSAGE && git commit -m "$MESSAGE"				# COMMIT
-git log --oneline
-git commit --amend										# AMEND
-git clone <repository>
-git status
-git add <file>
-git push											# PUSH
-git pull
-git fetch <remote>
-git branch
-git checkout <branch>
-git merge <branch>
-git log
-git diff
-git reset <file>
-git rm <file>
-git stash
-git stash pop
-git remote -v
-git tag <tag-name>
-git add .											# ADD ALL
+vim -c 'set filetype=sh' $DOTFILE_DIR/lists/git.txt                                           # EDIT
+open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/")         # PROJECT
+open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/pulls")    # PRS
+open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/actions")  # ACTIONS
+open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/release")  # RELEASE
+sh $DOTFILE_DIR/scripts/generate_github_link.sh                                               # FILE
+git log --graph --oneline --all --decorate                                                    # SHOW LOG
+git remote get-url origin | xargs -I {} echo -n {} | pbcopy                                   # ORIGIN
+git reset --soft HEAD^                                                                        # SOFT RESET
+echo -n "Commit Message: " && read MESSAGE && git commit -m "$MESSAGE"                        # COMMIT
+git log --oneline                                                                             # LOG ONELINE
+git diff --stat                                                                               # DIFF
+git commit --amend                                                                            # AMEND
+git clone <repository>                                                                        # CLONE
+git status                                                                                    # STATUS
+echo -n "Add file: " && read $(find . | fzf) && git add <file>                                # ADD FILE
+git push                                                                                      # PUSH
+git pull                                                                                      # PULL
+git fetch <remote>                                                                            # FETCH
+git branch                                                                                    # BRANCH
+git checkout <branch>                                                                         # CHECKOUT
+git merge <branch>                                                                            # MERGE
+git log                                                                                       # LOG
+git diff                                                                                      # DIFF
+git reset <file>                                                                              # RESET FILE
+git rm <file>                                                                                 # REMOVE FILE
+git stash                                                                                     # STASH
+git stash pop                                                                                 # STASH POP
+git remote -v                                                                                 # REMOTE
+git tag <tag-name>                                                                            # TAG
+git add .                                                                                     # ADD ALL
