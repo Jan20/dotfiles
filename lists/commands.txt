@@ -1,13 +1,13 @@
-vim -c 'set filetype=sh' $DOTFILE_DIR/lists/commands.txt     # EDIT
+vim -c 'set filetype=sh' $DOTFILES_DIR/lists/commands.txt                      # EDIT
 
-basename "$PWD" | pbcopy                                     # BASENAME
-find . -type f | fzf | pbcopy                                # FILENAME
-echo $PWD | pbcopy                                           # MARK
-top                                                          # GET RESOURCES
-$DOTFILE_DIR/scripts/dark-mode.sh                            # DARK MODE
-chmod +x $(find . -maxdepth 1 | fzf)                         # CHANGEMODE
-realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy                 # FULL PATH
-system_profiler SPSoftwareDataType SPHardwareDataType        # INFORMATION
-source .env                                                  # SOURCE
-echo "![TEXT](assets/posts/.png)" | pbcopy                   # INSERT IMAGE
-sed -i '' "s/TO_BE_REPLACED/REPLACEMENT/g" FILE.txt          # SED
+env | cut -d'=' -f1 | fzf | sed -e 's/^/$/' -e 's/$//g' | tr -d '\n' | pbcopy  # SELECT ENV
+basename "$PWD" | pbcopy                                                       # BASENAME
+find . -type f | fzf | pbcopy                                                  # FILENAME
+top                                                                            # GET RESOURCES
+$DOTFILES_DIR/scripts/dark-mode.sh                                             # DARK MODE
+chmod +x $(find . -maxdepth 1 | fzf)                                           # CHANGEMODE
+realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy                                   # FULL PATH
+system_profiler SPSoftwareDataType SPHardwareDataType                          # INFORMATION
+echo -n "![TEXT](assets/posts/TOPIC/POST/NAME.png)" | pbcopy                   # INSERT IMAGE
+echo -n "[Visit Google](https://www.google.com)" | pbcopy                      # INSERT LINK
+sed -i '' "s/TO_BE_REPLACED/REPLACEMENT/g" FILE.txt                            # SED

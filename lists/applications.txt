@@ -1,21 +1,21 @@
-vim -c 'set filetype=sh' $DOTFILE_DIR/lists/applications.txt  # EDIT
+vim -c 'set filetype=sh' $DOTFILES_DIR/lists/applications.txt  # EDIT
 
-open -a Telegram                                                            # TELEGRAM
-open -a Pages                                                               # PAGES
-open -a Maps                                                                # MAPS
-open -a notes                                                               # NOTES
-open -a Facetime                                                            # FACETIME
-open -a Calendar                                                            # CALENDAR
-open --background -a Docker                                                 # DOCKER
-open -a Safari                                                              # SAFARI
-open -a Reminders                                                           # REMINDERS
-open -a Photos                                                              # PHOTOS
-open -a Brave\ Browser                                                      # BRAVE
-open -a Spotify                                                             # SPOTIFY
-open -a WhatsApp                                                            # WHATSAPP
-open -a mail                                                                # MAIL
-open -a messages                                                            # MESSAGES
-open -a Postman                                                             # POSTMAN
-open -a ~/Applications/PyCharm\ Community\ Edition.app .                    # PYCHARM
-open -a Books                                                               # BOOKS
-open -a ChatGPT                                                             # CHATGPT
+open -a Telegram                                               # TELEGRAM
+open -a Pages                                                  # PAGES
+open -a Maps                                                   # MAPS
+open -a notes                                                  # NOTES
+open -a Facetime                                               # FACETIME
+open -a Calendar                                               # CALENDAR
+open --background -a Docker                                    # DOCKER
+open -a Safari                                                 # SAFARI
+open -a Reminders                                              # REMINDERS
+open -a Photos                                                 # PHOTOS
+open -a Brave\ Browser                                         # BRAVE
+open -a Spotify                                                # SPOTIFY
+open -a WhatsApp                                               # WHATSAPP
+open -a mail                                                   # MAIL
+open -a messages                                               # MESSAGES
+open -a Postman                                                # POSTMAN
+open -a ~/Applications/PyCharm\ Community\ Edition.app .       # PYCHARM
+open -a Books                                                  # BOOKS
+open -a ChatGPT                                                # CHATGPT

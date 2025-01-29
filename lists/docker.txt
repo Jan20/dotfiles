@@ -1,4 +1,4 @@
-vim -c 'set filetype=bash' $DOTFILE_DIR/lists/docker.txt                    # EDIT
+vim -c 'set filetype=bash' $DOTFILES_DIR/lists/docker.txt                   # EDIT
 open -a Docker                                                              # START DOCKER
 docker logs $(basename $PWD)                                                # GET LOGS
 docker kill $(docker ps --quiet)                                            # KILL CONTAINERS

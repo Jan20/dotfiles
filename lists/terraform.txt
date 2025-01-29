@@ -1,4 +1,4 @@
-vim -c 'set filetype=bash' ~/Developer/tools/dotfiles/lists/terraform.txt	# EDIT
+vim -c 'set filetype=bash' $DOTFILES_DIR/lists/terraform.txt	# EDIT
 
 terraform providers								# LIST PROVIDERS
 terraform graph | dot -Tpng > graph.png						# GRAPH

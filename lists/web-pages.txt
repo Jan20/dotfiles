@@ -1,2 +1,0 @@
-vim -c 'set filetype=sh' ~/Developer/tools/terminal-setup/lists/web-pages.txt	                                    	# EDIT
-open 'http://localhost:8080'												# DOCKER

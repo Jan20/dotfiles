@@ -1,13 +1,22 @@
-vim -c 'set filetype=sh' $DOTFILE_DIR/lists/config.txt                              # EDIT
+vim -c 'set filetype=sh' $DOTFILES_DIR/lists/config.txt         # EDIT
 
-source ~/.zshrc                                                                     # UPDATE
-vim ~/.vimrc                                                                        # VIM
-vim ~/.zshrc                                                                        # CONFIG
-vim -c 'set filetype=sh' $DOTFILE_DIR/prompt                                        # PROMT
-vim -c 'set filetype=sh' $DOTFILE_DIR/commands                                      # COMMANDS
-vim -c 'set filetype=bash' ~/.config/gcloud/configurations/config_default           # GCLOUD CONFIG
-vim -c 'set filetype=bash' ~/.config/gcloud/configurations/config_skillsboost       # SKILLSBOSOT
-cd $DOTFILE_DIR/lists                                                               # LISTS
-cd $DOTFILE_DIR/                                                                    # DOTFILES
-cd $DOTFILE_DIR/scripts                                                             # SCRIPTS
-cd $DOTFILE_DIR/requests                                                            # REQUESTS
+vim ~/.vimrc                                                    # VIMRC
+vim ~/.zshrc                                                    # MAIN CONFIG
+vim -c 'set filetype=sh' $DOTFILES_DIR/prompt                   # PROMT
+vim -c 'set filetype=bash' ~/.config/gcloud/configurations      # GCLOUD CONFIG
+
+vim $DOTFILES_DIR/commands.sh                                   # DOTFILES COMMANDS
+vim $DOTFILES_DIR/zshrc                                         # DOTFILES CONFIG
+cd $DOTFILES_DIR/scripts                                        # DOTFILES SCRIPTS
+cd $DOTFILES_DIR/lists                                          # DOTFILES LISTS
+cd $DOTFILES_DIR                                                # DOTFILES DIR 
+
+vim $RECIPES_DIR/commands.sh                                    # RECIPES COMMANDS
+cd $RECIPES_DIR/scripts                                         # RECIPES SCRIPTS
+cd $RECIPES_DIR/lists                                           # RECIPES LIST
+cd $RECIPES_DIR                                                 # RECIPES DIR
+
+vim $MANAGEMENT_DIR/commands.sh                                 # MANAGEMENT COMMANDS
+cd $MANAGEMENT_DIR/scripts                                      # MANAGEMENT SCRIPTS
+cd $MANAGEMENT_DIR/lists                                        # MANAGEMENT LIST
+cd $MANAGEMENT_DIR                                              # MANAGEMENT DIR

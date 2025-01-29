@@ -1,7 +1,7 @@
-vim -c 'set filetype=bash' $DOTFILE_DIR/lists/python.txt # EDIT
+vim -c 'set filetype=bash' $DOTFILES_DIR/lists/python.txt   # EDIT
 
-python main.py                                           # START
-python -m venv venv                                      # CREATE ENVIRONMENT
-python ~/Developer/blog/scripts/compose.py               # COMPOSE BLOG
-python ~/Developer/blog/scripts/create_sitemap.py        # CREATE SITEMAP
-source venv/bin/activate                                 # ACTIVATE
+python main.py                                              # START
+python -m venv venv                                         # CREATE ENVIRONMENT
+python ~/Developer/blog/scripts/compose.py                  # COMPOSE BLOG
+python ~/Developer/blog/scripts/create_sitemap.py           # CREATE SITEMAP
+source venv/bin/activate                                    # ACTIVATE

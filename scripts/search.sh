@@ -4,7 +4,7 @@
 read -p "Enter the search term: " search_term
 
 # Use grep to search for the term, exclude node_modules, and pipe results to fzf
-selected_file=$(grep -rl --exclude-dir=node_modules "$search_term" . | fzf)
+selected_file=$(grep -rl --exclude-dir=node_modules "$search_term" . | fzf --preview="bat --color=always {}")
 
 # Check if a file was selected
 if [ -n "$selected_file" ]; then

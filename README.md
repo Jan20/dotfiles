@@ -19,6 +19,7 @@ git clone https://github.com/Jan20/terminal-setup
 **Step 3:** Source the **commands** and **prompt** files in your ~/.zshrc file:
 
 _~/.zshrc_ file:
+
 ```
 echo "source $HOME/Developer/tools/dotfiles/commands >> ~/.zshrc
 echo "source $HOME/Developer/tools/dotfiles/prompt >> ~/.zshrc
@@ -39,14 +40,15 @@ Now, by pressing the **f** key, you can search for a directory and cd into it.
 More interesting, we can also bind a key to display and execute commands:
 
 ```
-alias g='eval $(cat ~/Developer/tools/dotfiles/lists/git.txt | fzf)'
+alias g='eval $(cat $DOTFILES_DIR/lists/git.txt | fzf)'
 ```
 
 <img width="1562" alt="Screenshot 2024-11-13 at 20 50 11" src="https://github.com/user-attachments/assets/b9ebe4e2-aea0-418d-a63f-9c97436e4f5a">
 
-However, the concept is not limited to commands, we can store URLs and open them upon selection: 
+However, the concept is not limited to commands, we can store URLs and open them upon selection:
+
 ```
-alias l='eval $(cat ~/Developer/tools/dotfiles/lists/web-pages.txt | fzf)'
+alias l='eval $(cat $DOTFILES_DIR/lists/web-pages.txt | fzf)'
 ```
 
 The project is structured as follows:
