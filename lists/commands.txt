@@ -1,13 +1,13 @@
-vim -c 'set filetype=sh' $DOTFILES_DIR/lists/commands.txt                      # EDIT
-
-env | cut -d'=' -f1 | fzf | sed -e 's/^/$/' -e 's/$//g' | tr -d '\n' | pbcopy  # SELECT ENV
-basename "$PWD" | pbcopy                                                       # BASENAME
-find . -type f | fzf | pbcopy                                                  # FILENAME
-top                                                                            # GET RESOURCES
-$DOTFILES_DIR/scripts/dark-mode.sh                                             # DARK MODE
-chmod +x $(find . -maxdepth 1 | fzf)                                           # CHANGEMODE
-realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy                                   # FULL PATH
-system_profiler SPSoftwareDataType SPHardwareDataType                          # INFORMATION
-echo -n "![TEXT](assets/posts/TOPIC/POST/NAME.png)" | pbcopy                   # INSERT IMAGE
-echo -n "[Visit Google](https://www.google.com)" | pbcopy                      # INSERT LINK
-sed -i '' "s/TO_BE_REPLACED/REPLACEMENT/g" FILE.txt                            # SED
+vim $DOTFILES_DIR/lists/commands.txt                                            # EDIT
+kill -9 $(lsof -ti :4200)                                                       # KILL PROCESS ON PORT 4200
+kill -9 $(lsof -ti :5000)                                                       # KILL PROCESS ON PORT 5000
+source .env                                                                     # SOURCE ENV
+docker exec -it postgres_database psql -U postgres                              # CONNECT TO POSTGRES
+env | cut -d'=' -f1 | fzf | sed -e 's/^/$/' -e 's/$//g' | tr -d '\n' | pbcopy   # SELECT ENV
+basename "$PWD" | pbcopy                                                        # BASENAME
+find . -type f | fzf | pbcopy                                                   # FILENAME
+top                                                                             # GET RESOURCES
+chmod +x $(find . -maxdepth 1 | fzf)                                            # CHANGEMODE
+realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy                                    # FULL PATH
+system_profiler SPSoftwareDataType SPHardwareDataType                           # INFORMATION
+sed -i '' "s/TO_BE_REPLACED/REPLACEMENT/g" FILE.txt                             # SED

@@ -1,5 +1,5 @@
-vim -c 'set filetype=sh' $DOTFILES_DIR/lists/git.txt                                            # EDIT
-
+vim $DOTFILES_DIR/lists/git.txt                                                                 # EDIT
+git branch | fzf | xargs git checkout \n                                                        # CHECKOUT
 open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/")           # PROJECT
 open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/pulls")      # PRS
 open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/actions")    # ACTIONS
@@ -9,7 +9,9 @@ git log --graph --oneline --all --decorate                                      
 git remote get-url origin | xargs -I {} echo -n {} | pbcopy                                     # ORIGIN
 git reset --soft HEAD^                                                                          # SOFT RESET
 echo -n "Commit Message: " && read MESSAGE && git commit -m "$MESSAGE"                          # COMMIT
+git blame $(find . | fzf)                                                                                # GIT BLAME
 git log --oneline                                                                               # LOG ONELINE
+git log --graph --all                                                                           # LOG GRAPH
 git diff --stat                                                                                 # DIFF
 git commit --amend                                                                              # AMEND
 git clone <repository>                                                                          # CLONE

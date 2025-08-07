@@ -1,11 +1,16 @@
 PS1='%F{30}(%~)%f %$'
 precmd() { RPROMPT=$(setRightPrompt) }
 
+DOCKER_ENABLED=1
+
 function setRightPrompt {
     local time="%F{55}($(date +"%H:%M:%S"))%f"
     if git rev-parse --is-inside-work-tree &>/dev/null; then
         local branch="%F{53}($(git rev-parse --abbrev-ref HEAD 2>/dev/null))%f"
         echo "$branch $time"
+    elif [ $DOCKER_ENABLED -eq 0 ]; then
+        local info="%F{53}($(docker ps >/dev/null 2>&1 && echo "🟢🐳" || echo "🔴🐳"))%f"
+        echo "$info $time"
     else
         echo "$time"
     fi
