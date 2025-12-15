@@ -1,7 +1,10 @@
-vim -c 'set filetype=bash' $DOTFILES_DIR/lists/python.txt   # EDIT
-
-python main.py                                              # START
-python -m venv venv                                         # CREATE ENVIRONMENT
-python ~/Developer/blog/scripts/compose.py                  # COMPOSE BLOG
-python ~/Developer/blog/scripts/create_sitemap.py           # CREATE SITEMAP
-source venv/bin/activate                                    # ACTIVATE
+vim $DOTFILES_DIR/lists/python.txt                # EDIT
+pip3 freeze > requirements.txt                    # SAVE DEPENDENCIES
+pip3 install -r requirements.txt                  # INSTALL DEPENDENCIES
+source .env                                       # SOURCE ENV
+python main.py                                    # START
+python -m venv venv                               # CREATE ENVIRONMENT
+~/Developer/blog && python scripts/compose.py     # COMPOSE BLOG
+python ~/Developer/blog/scripts/create_sitemap.py # CREATE SITEMAP
+source venv/bin/activate                          # ACTIVATE
+deactivate                                        # DEACTIVATE

@@ -1,23 +1,24 @@
-vim $DOTFILES_DIR/lists/docker.txt                                          # EDIT
-docker exec -it $(docker ps --format '{{.Names}}' | fzf) sh                 # SHELL INTO CONTAINER
-open -a Docker                                                              # START DOCKER
-docker logs $(basename $PWD)                                                # GET LOGS
-docker kill $(docker ps --quiet)                                            # KILL CONTAINERS
-docker exec -it $(basename $PWD) /bin/sh                                    # OPEN SHELL
-docker run -d -p 8080:80 --name $(basename $PWD) "$(basename $PWD):latest"  # RUN CONTAINER
+vim $DOTFILES_DIR/lists/docker.txt                                            # EDIT
+docker exec -it $(docker ps --format '{{.Names}}' | fzf) sh                   # SHELL INTO CONTAINER
+open -a Docker                                                                # START DOCKER
+docker logs $(basename $PWD)                                                  # GET LOGS
+docker kill $(docker ps --quiet)                                              # KILL CONTAINERS
+docker exec -it $(basename $PWD) /bin/sh                                      # OPEN SHELL
+docker run -d -p 8080:80 --name $(basename $PWD) "$(basename $PWD):latest"    # RUN CONTAINER
 docker run -d -p 8080:5000 --name $(basename $PWD) "$(basename $PWD):latest"  # RUN CONTAINER
-docker rmi $(docker images --quiet)                                         # DELETE ALL IMAGES
-docker build --progress=plain -t "$(basename $PWD):latest" .                # BUILD IMAGE
-cd docker && docker compose -f docker-compose.yml up -d                     # DOCKER COMPOSE
-docker images                                                               # LIST IMAGES
-docker stop $(docker ps -q)                                                 # STOP CONTAINERS
-docker rm -f $(docker ps -a -q)                                             # DELETE CONTAINERS
-docker compose up                                                           # COMPOSE UP
-docker compose down                                                         # COMPOSE DOWN
-docker volume ls                                                            # LIST VOLUMES
-docker volume prune                                                         # PRUNE
-docker ps                                                                   # GET CONTAINERS
-docker ps -a                                                                # GET ALL CONTAINERS
-docker network ls                                                           # GET NETWORKS
-cd docker && docker compose up -d                                           # COMPOSE UP
-osascript -e 'quit app "Docker"'                                            # QUIT DOCKER
+docker rmi $(docker images --quiet)                                           # DELETE ALL IMAGES
+docker build --progress=plain -t "$(basename $PWD):latest" .                  # BUILD IMAGE
+cd docker && docker compose -f docker-compose.yml up -d                       # DOCKER COMPOSE
+docker images                                                                 # LIST IMAGES
+docker stop $(docker ps -q)                                                   # STOP CONTAINERS
+docker rm -f $(docker ps -a -q)                                               # DELETE CONTAINERS
+docker compose up                                                             # COMPOSE UP
+docker compose down                                                           # COMPOSE DOWN
+docker volume ls                                                              # LIST VOLUMES
+docker volume prune                                                           # PRUNE
+docker ps                                                                     # GET CONTAINERS
+docker ps -a                                                                  # GET ALL CONTAINERS
+docker network ls                                                             # GET NETWORKS
+cd docker && docker compose up -d                                             # COMPOSE UP
+osascript -e 'quit app "Docker"'                                              # QUIT DOCKER
+pkill Docker                                                                  # KILL DOCKER

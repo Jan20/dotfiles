@@ -15,5 +15,3 @@ function setRightPrompt {
         echo "$time"
     fi
 }
-
-

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Toggle Dark/Light mode
 if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then

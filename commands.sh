@@ -12,12 +12,13 @@ alias x='cd $(find ~/Documents -maxdepth 4 -type d | fzf)'                      
 alias d='eval $(cat $DOTFILES_DIR/lists/docker.txt | fzf)'                                                  # DOCKER
 alias l='tree -C -L2'                                                                                       # TREE
 alias c='clear'													                                            # CLEAR
-alias ff='vim $(find . -type d \( -name node_modules -o -name .angular -o -name target -o -name .git \) -prune -o -type f ! -name "*.png" | fzf --preview="bat --color=always {}")' # OPEN FILE 
+alias ff='sh $DOTFILES_DIR/scripts/open_file.sh'                                                            # OPEN_FILE
 alias h='cd ~/Developer'					
 alias hh='eval $(cat ~/.zsh_history | fzf)'                                                                 # HISTORY
 alias kk='eval $(cat $DOTFILES_DIR/lists/kubernetes.txt | fzf)'					                            # KUBERNETES 
 alias i='cmd=$(cat $DOTFILES_DIR/lists/terraform.txt | fzf) && echo "$cmd" && eval "$cmd" && print -s "$cmd"'      # TERRAFORM
 alias j='eval $(cat $DOTFILES_DIR/lists/commands.txt | fzf)'                                                # GENERAL COMMANDS
+alias b='sh $DOTFILES_DIR/scripts/stories.sh'                                                               # STORIES
 alias jj='sh $DOTFILES_DIR/scripts/search.sh'			                                                    # SEARCH
 alias g='eval $(cat $DOTFILES_DIR/lists/git.txt | fzf)'	                                                    # GIT
 alias gg='eval $(cat $DOTFILES_DIR/lists/gcloud.txt | fzf)'                                                 # GCLOUD

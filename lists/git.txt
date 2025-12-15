@@ -9,7 +9,7 @@ git log --graph --oneline --all --decorate                                      
 git remote get-url origin | xargs -I {} echo -n {} | pbcopy                                     # ORIGIN
 git reset --soft HEAD^                                                                          # SOFT RESET
 echo -n "Commit Message: " && read MESSAGE && git commit -m "$MESSAGE"                          # COMMIT
-git blame $(find . | fzf)                                                                                # GIT BLAME
+git blame $(find . | fzf)                                                                       # GIT BLAME
 git log --oneline                                                                               # LOG ONELINE
 git log --graph --all                                                                           # LOG GRAPH
 git diff --stat                                                                                 # DIFF
