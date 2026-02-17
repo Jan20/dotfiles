@@ -1,13 +1,15 @@
-vim $DOTFILES_DIR/lists/npm.txt             # EDIT
-npx npm-check-updates -u                    # UPDATE ALL DEPENDENCIES
-nvm install node                            # UPDATE NODE
-npm cache clean --force                     # CLEAN CACHE
-npm run build:ssr                           # BUILD SSR
-npm run test                                # TEST
-npm install --verbose                       # INSTALL
-npm run build                               # BUILD
-npm ci && npm run build                     # NPM CI
-npm run start:ssr                           # SSR
-npm run start                               # START
-ng serve                                    # SERVE
-npm install --verbose --legacy-peer-deps    # LEGACY
+vim $DOTFILES_DIR/lists/npm.txt               # EDIT
+npm run lint                                  # LINT
+npx npm-check-updates -u                      # UPDATE ALL DEPENDENCIES
+nvm install node                              # UPDATE NODE
+npm cache clean --force                       # CLEAN CACHE
+npm run build:ssr                             # BUILD SSR
+npm run test                                  # TEST
+npm install --verbose                         # INSTALL
+npm run build                                 # BUILD
+npm ci && npm run build                       # NPM CI
+npm run start:ssr                             # SSR
+npm run start                                 # START
+ng serve                                      # SERVE
+npm install --verbose --legacy-peer-deps      # LEGACY
+sh $DOTFILES_DIR/scripts/ls_npm_dependency.sh # LIST DEPENDENCY

@@ -1,0 +1,4 @@
+vim $DOTFILES_DIR/lists/kubernetes.txt							            # EDIT
+kubectl get deployments														# GET DEPLOYMENTS
+kubectl get replicasets														# GET REPLICASETS
+kubectl get pods                                                            # GET PODS

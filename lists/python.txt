@@ -1,10 +1,13 @@
-vim $DOTFILES_DIR/lists/python.txt                # EDIT
-pip3 freeze > requirements.txt                    # SAVE DEPENDENCIES
-pip3 install -r requirements.txt                  # INSTALL DEPENDENCIES
-source .env                                       # SOURCE ENV
-python main.py                                    # START
-python -m venv venv                               # CREATE ENVIRONMENT
-~/Developer/blog && python scripts/compose.py     # COMPOSE BLOG
-python ~/Developer/blog/scripts/create_sitemap.py # CREATE SITEMAP
-source venv/bin/activate                          # ACTIVATE
-deactivate                                        # DEACTIVATE
+vim $DOTFILES_DIR/lists/python.txt                          # EDIT
+pip3 freeze > requirements.txt                              # SAVE DEPENDENCIES
+pip3 install -r requirements.txt                            # INSTALL DEPENDENCIES
+source .env                                                 # SOURCE ENV
+source .env && source venv/bin/activate && python main.py   # START
+python -m venv venv                                         # CREATE ENVIRONMENT
+~/Developer/blog && python scripts/compose.py               # COMPOSE BLOG
+python ~/Developer/blog/scripts/create_sitemap.py           # CREATE SITEMAP
+source venv/bin/activate                                    # ACTIVATE
+deactivate                                                  # DEACTIVATE
+coverage run -m unittest discover -s app/tests -p "test_*.py" # RUN TEST CASES
+coverage report
+coverage html

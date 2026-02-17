@@ -2,6 +2,7 @@ vim $DOTFILES_DIR/lists/config.txt                              # EDIT
 vim ~/.vimrc                                                    # VIMRC
 vim ~/.zshrc                                                    # MAIN CONFIG
 vim ~/.gitconfig                                                # GITCONFIG 
+vim ~/.npmrc                                                    # NPM CONFIG
 vim -c 'set filetype=bash' $DOTFILES_DIR/prompt                 # PROMT
 vim -c 'set filetype=bash' ~/.config/gcloud/configurations      # GCLOUD CONFIG
 vim $DOTFILES_DIR/commands.sh                                   # DOTFILES COMMANDS

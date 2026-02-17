@@ -1,11 +1,12 @@
 vim $DOTFILES_DIR/lists/commands.txt                                            # EDIT
+ls -l                                                                           # SHOW PERMISSIONS
 kill -9 $(lsof -ti :4200)                                                       # KILL PROCESS ON PORT 4200
 kill -9 $(lsof -ti :5000)                                                       # KILL PROCESS ON PORT 5000
 source .env                                                                     # SOURCE ENV
 docker exec -it postgres_database psql -U postgres                              # CONNECT TO POSTGRES
 env | cut -d'=' -f1 | fzf | sed -e 's/^/$/' -e 's/$//g' | tr -d '\n' | pbcopy   # SELECT ENV
 basename "$PWD" | pbcopy                                                        # BASENAME
-find . -type f | fzf | pbcopy                                                   # FILENAME
+find . -type f | fzf | tr -d '\n' | pbcopy                                      # COPY FILENAME
 top                                                                             # GET RESOURCES
 chmod +x $(find . -maxdepth 1 | fzf)                                            # CHANGEMODE
 realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy                                    # FULL PATH

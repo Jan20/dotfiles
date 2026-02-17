@@ -1,5 +1,6 @@
 # FZF
-export FZF_DEFAULT_OPTS=" --border=rounded --height=70% --reverse" 
+source ~/Developer/dotfiles/.env
+export FZF_DEFAULT_OPTS=" --border=rounded --height=15% --reverse" 
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'

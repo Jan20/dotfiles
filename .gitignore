@@ -6,3 +6,4 @@ lists/spotify.txt
 lists/ingredients.txt
 .DS_Store
 .env
+.idea

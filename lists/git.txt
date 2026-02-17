@@ -1,4 +1,7 @@
 vim $DOTFILES_DIR/lists/git.txt                                                                 # EDIT
+sh $DOTFILES_DIR/scripts/check_git_status.sh                                                    # CHECK GIT STATUS
+git diff --name-only | fzf --preview="bat --color=always {}"
+git diff --staged --name-only | fzf --preview="bat --color=always {}"
 git branch | fzf | xargs git checkout \n                                                        # CHECKOUT
 open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/")           # PROJECT
 open $(git config --get remote.origin.url | sed 's|.git$||' | xargs -I {} echo "{}/pulls")      # PRS
