@@ -1,5 +1,6 @@
 vim $DOTFILES_DIR/lists/git.txt                                                                 # EDIT
-sh $DOTFILES_DIR/scripts/check_git_status.sh                                                    # CHECK GIT STATUS
+sh $DOTFILES_DIR/scripts/git/fuzzy-checkout.sh                                                  # FUZZY CHECKOUT
+sh $DOTFILES_DIR/scripts/git/check_git_status.sh                                                # CHECK GIT STATUS
 git diff --name-only | fzf --preview="bat --color=always {}"
 git diff --staged --name-only | fzf --preview="bat --color=always {}"
 git branch | fzf | xargs git checkout \n                                                        # CHECKOUT

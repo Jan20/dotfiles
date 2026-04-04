@@ -14,7 +14,7 @@ vim $RECIPES_DIR/commands.sh                                    # RECIPES COMMAN
 cd $RECIPES_DIR/scripts                                         # RECIPES SCRIPTS
 cd $RECIPES_DIR/lists                                           # RECIPES LIST
 cd $RECIPES_DIR                                                 # RECIPES DIR
-vim $MANAGEMENT_DIR/commands.sh                                 # MANAGEMENT COMMANDS
-cd $MANAGEMENT_DIR/scripts                                      # MANAGEMENT SCRIPTS
-cd $MANAGEMENT_DIR/lists                                        # MANAGEMENT LIST
-cd $MANAGEMENT_DIR                                              # MANAGEMENT DIR
+vim $PRODUCTIVITY_DIR/commands.sh                               # PRODUCTIVITY COMMANDS
+cd $PRODUCTIVITY_DIR/scripts                                    # PRODUCTIVITY SCRIPTS
+cd $PRODUCTIVITY_DIR/lists                                      # PRODUCTIVITY LIST
+cd $PRODUCTIVITY_DIR                                            # PRODUCTIVITY DIR
