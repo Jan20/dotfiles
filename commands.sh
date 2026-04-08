@@ -14,8 +14,8 @@ alias c='clear'                                                                 
 alias f='cd "$(find ${SOURCE_CODE_HOME} -maxdepth 2 -type d -print0 | fzf --read0)"'                        # SEARCH DIRECTORY
 alias ff='sh $DOTFILES_DIR/scripts/general/open_file.sh'                                                    # OPEN_FILE
 alias hh='eval $(cat ~/.zsh_history | fzf)'                                                                 # HISTORY
-alias kk='eval $(cat $DOTFILES_DIR/lists/kubernetes.txt | fzf)'		                                        # KUBERNETES
-alias i='cmd=$(cat $DOTFILES_DIR/lists/terraform.txt | fzf) && echo "$cmd" && eval "$cmd" && print -s "$cmd"'      # TERRAFORM
+alias kk='eval $(cat $DOTFILES_DIR/lists/kubernetes.txt | fzf)'                                             # KUBERNETES
+alias i='cmd=$(cat $DOTFILES_DIR/lists/terraform.txt | fzf) && echo "$cmd" && eval "$cmd" && print -s "$cmd"' # TERRAFORM
 alias j='eval $(cat $DOTFILES_DIR/lists/commands.txt | fzf)'                                                # GENERAL COMMANDS
 alias b='sh $DOTFILES_DIR/scripts/stories.sh'                                                               # STORIES
 alias jj='sh $DOTFILES_DIR/scripts/search.sh'                                                               # SEARCH
@@ -27,12 +27,11 @@ alias o='[ -f "pom.xml" ] && idea . || { [ -f "requirements.txt" ] } && pycharm 
 alias p='eval $(cat $DOTFILES_DIR/lists/python.txt | fzf)'                                                  # PYTHON
 alias ls='ls --color'                    
 alias s='cd $(find . -type d \( -name .angular -o -name .git -o -name node_modules \) -prune -o -type d | fzf)' # SELECT DIRECTORY
-alias ss='eval $(cat $DOTFILES_DIR/lists/spotify.txt | fzf)'			                                    # SPOTIFY
+alias ss='eval $(cat $DOTFILES_DIR/lists/spotify.txt | fzf)'                                                # SPOTIFY
 alias t='vim -c "set filetype=markdown" $DOTFILES_DIR/lists/tasks.txt'                                      # TASKS
 alias u='source ~/.zshrc'                                                                                   # SOURCE ZSHRC FILE
 alias v='eval $(cat $DOTFILES_DIR/lists/config.txt | fzf)'                                                  # CONFIG
-alias x='cd $(find ~/Documents -maxdepth 4 -type d -print0 | fzf --read0)'                                  # SEARCH DOCUMENTS
-alias xx='open $(find ~/documents -type d \( -name node_modules -o -name .angular -o -name target -o -name .git \) -prune -o -type f ! -name "*.png" | fzf --preview="bat --color=always {}")' # OPEN FILE
+alias x='cd $(find ~/Documents -maxdepth 4 -type d \( -name tools \) -prune -o -type d | fzf --preview="ls --color=always {}")' # JUMP TO DOCUMENTS DIR
 alias python=python3                                                                                        # PYTHON3
 alias activate='source venv/bin/activate'                                                                   # ACTIVATE VENV
 alias ..='cd ..'                                                                                            # RETURN TO PREVIOUS DIR

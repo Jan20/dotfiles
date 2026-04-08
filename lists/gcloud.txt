@@ -1,7 +1,12 @@
-vim -c 'set filetype=sh' ~/Developer/tools/dotfiles/lists/gcloud.txt			# EDIT
-gcloud builds submit --config cloudbuild.yaml --verbosity=debug				# BUILD
-gcloud auth login									# GCLOUD AUTH
-export GCLOUD_ENABLED=$((1 - GCLOUD_ENABLED))						# TOGGLE GCLOUD
-gcloud run services list --platform managed --format="value(metadata.name)" 		# GET SERVICES
-gcloud config set run/region europe-west3 						# Set a default region
-
+vim $DOTFILES_DIR/lists/gcloud.txt                                                                  # EDIT
+gcloud builds submit --config cloudbuild.yaml --verbosity=debug                                     # BUILD BLOG
+gcloud components update                                                                            # UPDATE GCLOUD
+gcloud auth login                                                                                   # GCLOUD AUTH
+export GCLOUD_ENABLED=$((1 - GCLOUD_ENABLED))                                                       # TOGGLE GCLOUD
+gcloud run services list --platform managed --format="value(metadata.name)"                         # GET SERVICES
+gcloud config set run/region europe-west3                                                           # Set a default region
+echo -n "\nEnter a project ID: " && read PROJECT_ID && gcloud config set project $PROJECT_ID        # SET NEW PROJECT
+echo $(gcloud config get project)                                                                   # GET PROJECT
+gcloud auth application-default login                                                               # APPLICATION LOGIN
+echo -n "\nEnter quota project ID: " && read PROJECT_ID && gcloud auth application-default set-quota-project $PROJECT_ID # SET QUOTA PROJECT
+vim ~/.config/gcloud/configurations/config_default                                                  # EDIT CONFIG
