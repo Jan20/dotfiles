@@ -7,9 +7,10 @@ source .env                                                                     
 docker exec -it postgres_database psql -U postgres                              # CONNECT TO POSTGRES
 env | cut -d'=' -f1 | fzf | sed -e 's/^/$/' -e 's/$//g' | tr -d '\n' | pbcopy   # SELECT ENV
 basename "$PWD" | pbcopy                                                        # BASENAME
-find . -type f | fzf | tr -d '\n' | pbcopy                                      # COPY FILENAME
+ls | fzf | tr -d '\n' | pbcopy                                                  # COPY FILENAME
 top                                                                             # GET RESOURCES
 chmod +x $(find . -maxdepth 1 | fzf)                                            # CHANGEMODE
 realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy                                    # FULL PATH
 system_profiler SPSoftwareDataType SPHardwareDataType                           # INFORMATION
 sed -i '' "s/TO_BE_REPLACED/REPLACEMENT/g" FILE.txt                             # SED
+sh $DOTFILES_DIR/scripts/dark-mode.sh                                           # TOGGLE DARK MODE 

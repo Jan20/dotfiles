@@ -1,4 +1,6 @@
 vim $DOTFILES_DIR/lists/gcloud.txt                                                                  # EDIT
+sh /Users/jan/Developer/dotfiles/scripts/gcp/gcp-status.sh                                          # GCP INFO
+gcloud config get-value project                                                                     # GET PROJECT
 gcloud builds submit --config cloudbuild.yaml --verbosity=debug                                     # BUILD BLOG
 gcloud components update                                                                            # UPDATE GCLOUD
 gcloud auth login                                                                                   # GCLOUD AUTH
