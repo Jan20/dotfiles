@@ -6,6 +6,7 @@ kill -9 $(lsof -ti :5001)                                                       
 source .env                                                                     # SOURCE ENV
 docker exec -it postgres_database psql -U postgres                              # CONNECT TO POSTGRES
 env | cut -d'=' -f1 | fzf | sed -e 's/^/$/' -e 's/$//g' | tr -d '\n' | pbcopy   # SELECT ENV
+echo -n "$(pwd)" | pbcopy                                                       # COPY DIR
 basename "$PWD" | pbcopy                                                        # BASENAME
 ls | fzf | tr -d '\n' | pbcopy                                                  # COPY FILENAME
 top                                                                             # GET RESOURCES

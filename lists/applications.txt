@@ -21,4 +21,6 @@ open -a Postman                                                 # POSTMAN
 open -a ~/Applications/PyCharm\ Community\ Edition.app .        # PYCHARM
 open -a Books                                                   # BOOKS
 open -a ChatGPT                                                 # CHATGPT
-open -a Apple\ TV
+open -a Apple\ TV                                               # TV
+open -a Brave\ Browser                                          # BRAVE
+open -a Google\ Chrome                                          # CHROME

@@ -6,13 +6,13 @@ bindkey -s "^O" '[ -f "pom.xml" ] && idea . || { [ -f "requirements.txt" ] } && 
 bindkey -s "^v" 'eval $(cat $DOTFILES_DIR/lists/config.txt | fzf)\n'                                        # CONFIG
 bindkey -s "^G" 'eval $(cat $DOTFILES_DIR/lists/git.txt | fzf) \n'                                          # GIT
 bindkey -s "^W" 'cd $(find ~/Documents -maxdepth 4 -type d | fzf)\n'                                        # SEARCH DOCS
-bindkey -s "^Y" 'sh $DOTFILES_DIR/scripts/general/execute_shell_script.sh \n'                               # EXECUTE SCRIPT
+bindkey -s "^Y" 'sh $DOTFILES_DIR/scripts/general/execute-shell-script.sh \n'                               # EXECUTE SCRIPT
 bindkey -s "^F" 'cd $(find ~/Developer -maxdepth 2 -type d \\( -name tools \\) -prune -o -type d | fzf  --preview="ls --color=always {}") \n' # SEARCH DIRECTORY
 alias d='eval $(cat $DOTFILES_DIR/lists/docker.txt | fzf)'                                                  # DOCKER
 alias l='tree -C -L2'                                                                                       # TREE
 alias c='clear'                                                                                             # CLEAR
 alias f='cd "$(find ${SOURCE_CODE_HOME} -maxdepth 2 -type d -print0 | fzf --read0)"'                        # SEARCH DIRECTORY
-alias ff='sh $DOTFILES_DIR/scripts/general/open_file.sh'                                                    # OPEN_FILE
+alias ff='sh $DOTFILES_DIR/scripts/general/open-file.sh'                                                    # OPEN_FILE
 alias hh='eval $(cat ~/.zsh_history | fzf)'                                                                 # HISTORY
 alias kk='eval $(cat $DOTFILES_DIR/lists/kubernetes.txt | fzf)'                                             # KUBERNETES
 alias i='cmd=$(cat $DOTFILES_DIR/lists/terraform.txt | fzf) && echo "$cmd" && eval "$cmd" && print -s "$cmd"' # TERRAFORM
@@ -35,3 +35,4 @@ alias x='cd $(find ~/Documents -maxdepth 4 -type d \( -name tools \) -prune -o -
 alias python=python3                                                                                        # PYTHON3
 alias activate='source venv/bin/activate'                                                                   # ACTIVATE VENV
 alias ..='cd ..'                                                                                            # RETURN TO PREVIOUS DIR
+alias cc=copilot                                                                                            # COPILOT
