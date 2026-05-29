@@ -7,11 +7,12 @@ bindkey -s "^v" 'eval $(cat $DOTFILES_DIR/lists/config.txt | fzf)\n'            
 bindkey -s "^G" 'eval $(cat $DOTFILES_DIR/lists/git.txt | fzf) \n'                                          # GIT
 bindkey -s "^W" 'cd $(find ~/Documents -maxdepth 4 -type d | fzf)\n'                                        # SEARCH DOCS
 bindkey -s "^Y" 'sh $DOTFILES_DIR/scripts/general/execute-shell-script.sh \n'                               # EXECUTE SCRIPT
-bindkey -s "^F" 'cd $(find ~/Developer -maxdepth 2 -type d \\( -name tools \\) -prune -o -type d | fzf  --preview="ls --color=always {}") \n' # SEARCH DIRECTORY
+bindkey -s "^F" "cd \$(\$DOTFILES_DIR/scripts/general/select-project.sh)\n"                                 # CHANGE PROJECT
+bindkey -s "^D" "cd \$(\$DOTFILES_DIR/scripts/general/select-dir.sh)\n"                                     # CHANGE DIR
 alias d='eval $(cat $DOTFILES_DIR/lists/docker.txt | fzf)'                                                  # DOCKER
 alias l='tree -C -L2'                                                                                       # TREE
 alias c='clear'                                                                                             # CLEAR
-alias f='cd "$(find ${SOURCE_CODE_HOME} -maxdepth 2 -type d -print0 | fzf --read0)"'                        # SEARCH DIRECTORY
+alias f="cd \$(\$DOTFILES_DIR/scripts/general/select-project.sh)"                                           # SEARCH DIRECTORY
 alias ff='sh $DOTFILES_DIR/scripts/general/open-file.sh'                                                    # OPEN_FILE
 alias hh='eval $(cat ~/.zsh_history | fzf)'                                                                 # HISTORY
 alias kk='eval $(cat $DOTFILES_DIR/lists/kubernetes.txt | fzf)'                                             # KUBERNETES
@@ -25,8 +26,8 @@ alias n='eval $(cat $DOTFILES_DIR/lists/npm.txt | fzf)'	                        
 alias mm='DOCKER_ENABLED=$((1 - DOCKER_ENABLED))'                                                           # ENABLE DOCKER
 alias o='[ -f "pom.xml" ] && idea . || { [ -f "requirements.txt" ] } && pycharm . || code .'                # OPEN PROJECT
 alias p='eval $(cat $DOTFILES_DIR/lists/python.txt | fzf)'                                                  # PYTHON
-alias ls='ls --color'                    
-alias s='cd $(find . -type d \( -name .angular -o -name .git -o -name node_modules \) -prune -o -type d | fzf)' # SELECT DIRECTORY
+alias ls='ls --color'                                                                                       # LS WITH COLOR
+alias s="cd \$(\$DOTFILES_DIR/scripts/general/select-dir.sh)"                                               # SELECT DIR
 alias ss='eval $(cat $DOTFILES_DIR/lists/spotify.txt | fzf)'                                                # SPOTIFY
 alias t='vim -c "set filetype=markdown" $DOTFILES_DIR/lists/tasks.txt'                                      # TASKS
 alias u='source ~/.zshrc'                                                                                   # SOURCE ZSHRC FILE

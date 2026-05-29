@@ -1,4 +1,5 @@
 vim $DOTFILES_DIR/lists/commands.txt                                            # EDIT
+uname -a                                                                        # GET SYSTEM INFORMATION
 ls -l                                                                           # SHOW PERMISSIONS
 kill -9 $(lsof -ti :4200)                                                       # KILL PROCESS ON PORT 4200
 kill -9 $(lsof -ti :5000)                                                       # KILL PROCESS ON PORT 5000
