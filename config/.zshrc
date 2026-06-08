@@ -1,5 +1,12 @@
 source ~/Developer/dotfiles/.env
-export FZF_DEFAULT_OPTS=" --border=rounded --height=45% --reverse" 
+export FZF_DEFAULT_OPTS=" --border=rounded --height=45% --reverse"
+
+# -- Tools (auto-add to PATH if installed) ------------------------------------
+
+[ -d "$TOOLS_DIR/bat/bin" ] && export PATH="$TOOLS_DIR/bat/bin:$PATH"
+[ -d "$TOOLS_DIR/fzf/bin" ] && export PATH="$TOOLS_DIR/fzf/bin:$PATH"
+
+# -- Completion ---------------------------------------------------------------
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
