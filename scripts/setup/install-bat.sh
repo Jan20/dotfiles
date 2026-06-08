@@ -3,10 +3,10 @@
 # =============================================================================
 # install-bat.sh
 # Description : Installs the latest bat release binary from GitHub into
-#               $TOOLS_DIR/bat without relying on a package manager.
+#               $SOURCE_CODE_HOME/tools/bat without relying on a package manager.
 # Dependencies: curl, tar, find
 # Usage       : sh install-bat.sh
-# Environment : TOOLS_DIR — required, e.g. export TOOLS_DIR="$HOME/tools"
+# Environment : SOURCE_CODE_HOME — required, e.g. export SOURCE_CODE_HOME="$HOME/Developer"
 # =============================================================================
 
 # -- Configuration ------------------------------------------------------------
@@ -31,7 +31,7 @@ info() {
 command -v curl >/dev/null 2>&1 || die "curl is required but not installed."
 command -v tar  >/dev/null 2>&1 || die "tar is required but not installed."
 
-[ -n "$TOOLS_DIR" ] || die "TOOLS_DIR is not set. Export it before running this script."
+[ -n "$SOURCE_CODE_HOME" ] || die "SOURCE_CODE_HOME is not set. Export it before running this script."
 
 # -- Detect architecture automatically ----------------------------------------
 
@@ -57,7 +57,7 @@ info "Latest version: $BAT_VERSION"
 
 # -- Prepare directories ------------------------------------------------------
 
-BAT_DIR="$TOOLS_DIR/bat"
+BAT_DIR="$SOURCE_CODE_HOME/tools/bat"
 TMP_DIR=$(mktemp -d)
 
 mkdir -p "$BAT_DIR/bin" || die "Failed to create '$BAT_DIR/bin'."
@@ -96,4 +96,4 @@ info "bat $("$BAT_DIR/bin/bat" --version) installed successfully."
 info "Binary: $BAT_DIR/bin/bat"
 info ""
 info "Add to your zshrc if not already present:"
-info "  export PATH=\"\$TOOLS_DIR/bat/bin:\$PATH\""
+info "  export PATH=\"\$SOURCE_CODE_HOME/tools/bat/bin:\$PATH\""

@@ -2,20 +2,18 @@
 
 # =============================================================================
 # install-fzf.sh
-# Description : Installs fzf from the official GitHub repository without
-#               relying on a package manager (brew, apt, etc.).
+# Description : Installs fzf from the official GitHub repository into
+#               $SOURCE_CODE_HOME/tools/fzf without relying on a package manager.
 #               Also installs shell keybindings and fuzzy completion.
-# Dependencies: git, curl or wget
+# Dependencies: git
 # Usage       : sh install-fzf.sh
+# Environment : SOURCE_CODE_HOME — required, e.g. export SOURCE_CODE_HOME="$HOME/Developer"
 # =============================================================================
 
 # -- Configuration ------------------------------------------------------------
 
 FZF_REPO="https://github.com/junegunn/fzf.git"
 FZF_VERSION="${FZF_VERSION:-latest}"   # pin to e.g. "0.62.0" for reproducibility
-
-[ -n "$TOOLS_DIR" ] || die "TOOLS_DIR is not set."
-FZF_DIR="$TOOLS_DIR/fzf"
 
 # -- Helpers ------------------------------------------------------------------
 
@@ -31,6 +29,10 @@ info() {
 # -- Preflight ----------------------------------------------------------------
 
 command -v git >/dev/null 2>&1 || die "git is required but not installed."
+
+[ -n "$SOURCE_CODE_HOME" ] || die "SOURCE_CODE_HOME is not set. Export it before running this script."
+
+FZF_DIR="$SOURCE_CODE_HOME/tools/fzf"
 
 # -- Install or update --------------------------------------------------------
 
@@ -62,8 +64,9 @@ info "Running fzf install script..."
 "$FZF_DIR/bin/fzf" --version >/dev/null 2>&1 \
     || die "fzf binary not found after install."
 
-info "fzf $(\"$FZF_DIR/bin/fzf\" --version) installed successfully."
+info "fzf $("$FZF_DIR/bin/fzf" --version) installed successfully."
 info "Binary: $FZF_DIR/bin/fzf"
 info ""
 info "Add to your zshrc if not already present:"
-info "  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh"
+info "  export PATH=\"\$SOURCE_CODE_HOME/tools/fzf/bin:\$PATH\""
+info "  [ -f \$SOURCE_CODE_HOME/tools/fzf/.fzf.zsh ] && source \$SOURCE_CODE_HOME/tools/fzf/.fzf.zsh"
