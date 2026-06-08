@@ -12,6 +12,6 @@ chmod +x $(find . -maxdepth 1 | fzf)                                            
 realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy                                    # FULL PATH
 system_profiler SPSoftwareDataType SPHardwareDataType                           # INFORMATION
 sed -i '' "s/TO_BE_REPLACED/REPLACEMENT/g" FILE.txt                             # SED
-sh $DOTFILES_DIR/scripts/general/kill-port.sh                                   # KILL PORT
-sh $DOTFILES_DIR/scripts/general/toggle-dark-mode.sh                            # TOGGLE DARK MODE 
-sh $DOTFILES_DIR/scripts/general/unzip-select.sh                                # UNZIP SELECT
+sh $DOTFILES_DIR/scripts/general/stop-service.sh                                # STOP SERVICE
+sh $DOTFILES_DIR/scripts/general/toggle-dark-mode.sh                            # TOGGLE DARK MODE
+sh $DOTFILES_DIR/scripts/general/unzip-archive.sh                               # UNZIP ARCHIVE

@@ -1,13 +1,13 @@
 #!/bin/sh
 
 # =============================================================================
-# kill-port.sh
+# stop-service.sh
 # Description : Finds and kills the process occupying a given port.
 #               Port is either passed as an argument or selected via fzf.
 # Dependencies: lsof, kill, fzf (optional — only needed for interactive mode)
-# Usage       : sh kill-port.sh [port]
-#               sh kill-port.sh 4200
-#               sh kill-port.sh        (launches fzf port picker)
+# Usage       : sh stop-service.sh [port]
+#               sh stop-service.sh 4200
+#               sh stop-service.sh        (launches fzf port picker)
 # =============================================================================
 
 # -- Configuration ------------------------------------------------------------

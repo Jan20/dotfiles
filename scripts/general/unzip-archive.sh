@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # =============================================================================
-# unzip-select.sh
+# unzip-archive.sh
 # Description : Fuzzy-finds a zip file in the current directory and extracts
 #               it into a subdirectory named after the archive.
 # Dependencies: find, fzf, unzip
-# Usage       : sh unzip-select.sh
+# Usage       : sh unzip-archive.sh
 # =============================================================================
 
 # -- Configuration ------------------------------------------------------------
