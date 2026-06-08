@@ -1,0 +1,2 @@
+vim $DOTFILES_DIR/lists/agents.txt                      # EDIT
+adk web                                                 # WEB

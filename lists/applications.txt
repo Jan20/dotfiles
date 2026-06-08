@@ -6,8 +6,8 @@ open -a Contacts                                                # CONTACTS
 open -a Telegram                                                # TELEGRAM
 open -a Pages                                                   # PAGES
 open -a Maps                                                    # MAPS
-open -a notes                                                   # NOTES
-open -a Facetime                                                # FACETIME
+open -a Notes                                                   # NOTES
+open -a FaceTime                                                # FACETIME
 open -a Calendar                                                # CALENDAR
 open --background -a Docker                                     # DOCKER
 open -a Safari                                                  # SAFARI
@@ -15,8 +15,8 @@ open -a Reminders                                               # REMINDERS
 open -a Photos                                                  # PHOTOS
 open -a Spotify                                                 # SPOTIFY
 open -a WhatsApp                                                # WHATSAPP
-open -a mail                                                    # MAIL
-open -a messages                                                # MESSAGES
+open -a Mail                                                    # MAIL
+open -a Messages                                                # MESSAGES
 open -a Postman                                                 # POSTMAN
 open -a ~/Applications/PyCharm\ Community\ Edition.app .        # PYCHARM
 open -a Books                                                   # BOOKS
@@ -24,3 +24,4 @@ open -a ChatGPT                                                 # CHATGPT
 open -a Apple\ TV                                               # TV
 open -a Brave\ Browser                                          # BRAVE
 open -a Google\ Chrome                                          # CHROME
+open -a Google\ Chrome --args --incognito                       # CHROME INCOGNITO

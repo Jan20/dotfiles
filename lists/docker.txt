@@ -1,4 +1,5 @@
 vim $DOTFILES_DIR/lists/docker.txt                                            # EDIT
+docker exec -it postgres_database psql -U postgres                              # CONNECT TO POSTGRES
 docker exec -it $(docker ps --format '{{.Names}}' | fzf) sh                   # SHELL INTO CONTAINER
 open -a Docker                                                                # START DOCKER
 docker logs $(basename $PWD)                                                  # GET LOGS

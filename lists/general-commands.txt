@@ -1,11 +1,8 @@
-vim $DOTFILES_DIR/lists/commands.txt                                            # EDIT
+vim $DOTFILES_DIR/lists/general-commands.txt                                    # EDIT
+echo $USER                                                                      # GET USER
 uname -a                                                                        # GET SYSTEM INFORMATION
 ls -l                                                                           # SHOW PERMISSIONS
-kill -9 $(lsof -ti :4200)                                                       # KILL PROCESS ON PORT 4200
-kill -9 $(lsof -ti :5000)                                                       # KILL PROCESS ON PORT 5000
-kill -9 $(lsof -ti :5001)                                                       # KILL PROCESS ON PORT 5000
 source .env                                                                     # SOURCE ENV
-docker exec -it postgres_database psql -U postgres                              # CONNECT TO POSTGRES
 env | cut -d'=' -f1 | fzf | sed -e 's/^/$/' -e 's/$//g' | tr -d '\n' | pbcopy   # SELECT ENV
 echo -n "$(pwd)" | pbcopy                                                       # COPY DIR
 basename "$PWD" | pbcopy                                                        # BASENAME
@@ -15,4 +12,6 @@ chmod +x $(find . -maxdepth 1 | fzf)                                            
 realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy                                    # FULL PATH
 system_profiler SPSoftwareDataType SPHardwareDataType                           # INFORMATION
 sed -i '' "s/TO_BE_REPLACED/REPLACEMENT/g" FILE.txt                             # SED
-sh $DOTFILES_DIR/scripts/dark-mode.sh                                           # TOGGLE DARK MODE 
+sh $DOTFILES_DIR/scripts/general/kill-port.sh                                   # KILL PORT
+sh $DOTFILES_DIR/scripts/general/toggle-dark-mode.sh                            # TOGGLE DARK MODE 
+sh $DOTFILES_DIR/scripts/general/unzip-select.sh                                # UNZIP SELECT

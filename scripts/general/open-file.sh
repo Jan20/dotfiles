@@ -53,7 +53,7 @@ file=$(
 # --- Determine how to open the selected file ----------------------------------
 
 case "$file" in
-  *.pdf | *.pages | *.numbers | *.jpg | *.jpeg | *.png)
+  *.pdf | *.pages | *.numbers | *.jpg | *.jpeg | *.png | *.PNG)
     open "$file"
     exit 0
     ;;

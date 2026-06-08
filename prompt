@@ -1,17 +1,66 @@
+# =============================================================================
+# prompt
+# Description : Configures zsh PS1 (left) and RPROMPT (right).
+#               Right prompt priority: git branch → docker status → time only.
+# =============================================================================
+
+# -- Configuration ------------------------------------------------------------
+
+DOCKER_ENABLED=0   # set to 0 to hide docker status from prompt
+
+# -- Colours (zsh %F{n} codes) ------------------------------------------------
+
+_CLR_PATH=30
+_CLR_BRANCH=60
+_CLR_DOCKER=53
+_CLR_TIME=55
+
+# -- Left prompt --------------------------------------------------------------
+
 PS1='%F{30}(%~)%f %$'
-precmd() { RPROMPT=$(setRightPrompt) }
 
-DOCKER_ENABLED=1
+# -- Git branch cache (updated on directory change, not every prompt) ---------
 
-function setRightPrompt {
-    local time="%F{55}($(date +"%H:%M:%S"))%f"
+_GIT_BRANCH=""
+
+chpwd() {
     if git rev-parse --is-inside-work-tree &>/dev/null; then
-        local branch="%F{53}($(git rev-parse --abbrev-ref HEAD 2>/dev/null))%f"
-        echo "$branch $time"
-    elif [ $DOCKER_ENABLED -eq 0 ]; then
-        local info="%F{53}($(docker ps >/dev/null 2>&1 && echo "🟢🐳" || echo "🔴🐳"))%f"
-        echo "$info $time"
+        _GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    else
+        _GIT_BRANCH=""
+    fi
+}
+chpwd   # initialise on shell start
+
+# -- Docker status cache (refreshed at most every 10 seconds) -----------------
+
+_DOCKER_STATUS=""
+_DOCKER_LAST_CHECK=0
+
+_get_docker_status() {
+    local now
+    now=$(date +%s)
+    if [ $((now - _DOCKER_LAST_CHECK)) -gt 10 ]; then
+        docker ps >/dev/null 2>&1 && _DOCKER_STATUS="🟢🐳" || _DOCKER_STATUS="🔴🐳"
+        _DOCKER_LAST_CHECK=$now
+    fi
+    echo "$_DOCKER_STATUS"
+}
+
+# -- Right prompt -------------------------------------------------------------
+
+_build_right_prompt() {
+    local time="%F{$_CLR_TIME}($(date +"%H:%M:%S"))%f"
+
+    if [ -n "$_GIT_BRANCH" ]; then
+        echo "%F{$_CLR_BRANCH}($_GIT_BRANCH)%f $time"
+    elif [ "$DOCKER_ENABLED" -eq 1 ]; then
+        local docker_status
+        docker_status=$(_get_docker_status)
+        echo "%F{$_CLR_DOCKER}($docker_status)%f $time"
     else
         echo "$time"
     fi
 }
+
+precmd() { RPROMPT=$(_build_right_prompt) }
