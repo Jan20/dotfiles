@@ -5,8 +5,8 @@ vim ~/.gitconfig                                                # GITCONFIG
 vim ~/.npmrc                                                    # NPM CONFIG
 vim -c 'set filetype=bash' $DOTFILES_DIR/prompt                 # PROMT
 vim -c 'set filetype=bash' ~/.config/gcloud/configurations      # GCLOUD CONFIG
-vim $DOTFILES_DIR/commands.sh                                   # DOTFILES COMMANDS
-vim $DOTFILES_DIR/zshrc                                         # DOTFILES CONFIG
+vim $DOTFILES_DIR/config/commands.sh                            # DOTFILES COMMANDS
+vim $DOTFILES_DIR/config/.zshrc                                 # DOTFILES CONFIG
 cd $DOTFILES_DIR/scripts                                        # DOTFILES SCRIPTS
 cd $DOTFILES_DIR/lists                                          # DOTFILES LISTS
 cd $DOTFILES_DIR                                                # DOTFILES DIR 

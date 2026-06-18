@@ -36,6 +36,7 @@ alias ss='eval $(cat $DOTFILES_DIR/lists/spotify.txt | fzf)'                    
 alias u='source ~/.zshrc'                                                                                   # SOURCE ZSHRC FILE
 alias v='eval $(cat $DOTFILES_DIR/lists/config.txt | fzf)'                                                  # CONFIG
 alias x='cd $(find ~/Documents -maxdepth 4 -type d \( -name tools \) -prune -o -type d | fzf --preview="ls --color=always {}")' # JUMP TO DOCUMENTS DIR
+alias xx='cd ~/Downloads'                                                                                   # GO TO DOWNLOADS
 alias python=python3                                                                                        # PYTHON3
 alias activate='source venv/bin/activate'                                                                   # ACTIVATE VENV
 alias ..='cd ..'                                                                                            # RETURN TO PREVIOUS DIR

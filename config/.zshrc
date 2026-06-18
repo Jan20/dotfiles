@@ -1,4 +1,4 @@
-source ~/Developer/dotfiles/.env
+source ~/Developer/tools/dotfiles/.env
 export FZF_DEFAULT_OPTS=" --border=rounded --height=45% --reverse"
 
 # -- Tools (auto-add to PATH if installed) ------------------------------------
@@ -18,4 +18,5 @@ zstyle ':completion:*' complete-options true
 zstyle ':completion:*' file-sort dummyvalue
 autoload -Uz compinit && compinit
 
-source "$DOTFILES_DIR/prompt"
+source "$DOTFILES_DIR/config/prompt"
+source "$DOTFILES_DIR/config/commands.sh"

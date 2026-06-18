@@ -28,12 +28,14 @@ DIRECTORY=$(
         \( -name node_modules       \
         -o -name .git               \
         -o -name .idea              \
-        -o -name .dist              \
-        -o -name tools \) -prune    \
+        -o -name .dist \) -prune    \
         -o -type d -print           \
     | fzf --preview="[ -f {}/README.md ] && cat {}/README.md || ls --color=always {}"
 )
 
-[ -z "$DIRECTORY" ] && die "No directory selected."
+if [ -z "$DIRECTORY" ]; then
+  echo $PWD
+  exit -1
+fi
 
 echo $DIRECTORY
