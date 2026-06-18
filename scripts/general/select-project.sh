@@ -11,7 +11,7 @@
 # -- Configuration ------------------------------------------------------------
 
 SEARCH_ROOT="${SEARCH_ROOT:-$HOME/Developer}"
-MAX_DEPTH=3
+MAX_DEPTH=2
 
 # -- Helpers ------------------------------------------------------------------
 
@@ -30,12 +30,13 @@ DIRECTORY=$(
         -o -name .idea              \
         -o -name .dist \) -prune    \
         -o -type d -print           \
-    | fzf --preview="[ -f {}/README.md ] && cat {}/README.md || ls --color=always {}"
+    | sed "s|^$SEARCH_ROOT|.|"             \
+    | fzf --preview="ls $(echo "$SEARCH_ROOT")/{}"
 )
 
 if [ -z "$DIRECTORY" ]; then
-  echo $PWD
-  exit -1
+  echo "$PWD"
+  exit 1
 fi
 
-echo $DIRECTORY
+echo "$DIRECTORY" | sed "s|.|$SEARCH_ROOT|"
