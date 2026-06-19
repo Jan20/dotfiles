@@ -1,9 +1,14 @@
 vim $DOTFILES_DIR/lists/gcloud.txt                                                                  # EDIT
-sh /Users/jan/Developer/dotfiles/scripts/gcp/gcp-status.sh                                          # GCP INFO
+gcloud auth login                                                                                   # GCLOUD AUTH LOGIN
+sh $DOTFILES_DIR/scripts/gcp/set-project.sh                                                         # SET PROJECT
+sh $DOTFILES_DIR/scripts/gcp/gcp-status.sh                                                          # GCP INFO
+sh $DOTFILES_DIR/scripts/gcp/cloudrun-logs.sh                                                       # CLOUDRUN LOGS
+gcloud run services list                                                                            # LIST ALL CLOUDRUN INSTANCES
+gcloud iam service-accounts list --format="value(email)"                                            # GET SERVICE ACCOUNTS
+gcloud auth list                                                                                    # LIST ACCOUNT NAMES
 gcloud config get-value project                                                                     # GET PROJECT
 gcloud builds submit --config cloudbuild.yaml --verbosity=debug                                     # BUILD BLOG
 gcloud components update                                                                            # UPDATE GCLOUD
-gcloud auth login                                                                                   # GCLOUD AUTH
 export GCLOUD_ENABLED=$((1 - GCLOUD_ENABLED))                                                       # TOGGLE GCLOUD
 gcloud run services list --platform managed --format="value(metadata.name)"                         # GET SERVICES
 gcloud config set run/region europe-west3                                                           # Set a default region
