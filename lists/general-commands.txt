@@ -1,4 +1,5 @@
 vim $DOTFILES_DIR/lists/general-commands.txt                                    # EDIT
+sh $DOTFILES_DIR/scripts/general/copy-file-content.sh                           # COPY
 echo $USER                                                                      # GET USER
 uname -a                                                                        # GET SYSTEM INFORMATION
 ls -l                                                                           # SHOW PERMISSIONS

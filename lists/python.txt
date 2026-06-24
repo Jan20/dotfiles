@@ -7,6 +7,7 @@ pip3 freeze > requirements.txt                                          # SAVE D
 pip3 install -r requirements.txt                                        # INSTALL DEPENDENCIES
 source .env                                                             # SOURCE ENV
 source .env && source venv/bin/activate && python main.py               # START
+python main.py                                                          # START
 ~/Developer/blog && python scripts/compose.py                           # COMPOSE BLOG
 python ~/Developer/blog/scripts/create_sitemap.py                       # CREATE SITEMAP
 source venv/bin/activate                                                # ACTIVATE
