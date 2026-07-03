@@ -29,7 +29,7 @@ alias mm='DOCKER_ENABLED=$((1 - DOCKER_ENABLED))'                               
 alias o='[ -f "pom.xml" ] && idea . || { [ -f "requirements.txt" ] } && pycharm . || code .'                # OPEN PROJECT
 alias p='eval $(cat $DOTFILES_DIR/lists/python.txt | fzf)'                                                  # PYTHON
 alias ls='ls --color'                                                                                       # LS WITH COLOR
-alias t='vim $DOCUMENTS_DIR/tasks.txt'                                                                      # TASKS
+alias t='vim $TASKS_DIR/tasks.txt'                                                                          # TASKS
 alias tt='sh $DOTFILES_DIR/scripts/jira/show-jira-stories.sh \n'                                            # SHOW JIRA STORY
 alias s="cd \$(\$DOTFILES_DIR/scripts/general/select-dir.sh)"                                               # SELECT DIR
 alias ss='eval $(cat $DOTFILES_DIR/lists/spotify.txt | fzf)'                                                # SPOTIFY

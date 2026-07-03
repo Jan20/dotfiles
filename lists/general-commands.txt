@@ -1,5 +1,6 @@
 vim $DOTFILES_DIR/lists/general-commands.txt                                    # EDIT
-sh $DOTFILES_DIR/scripts/general/copy-file-content.sh                           # COPY
+f="$(find . -name '*.json' | fzf)" && jq '.' "$f" > tmp.json && mv tmp.json "$f"    # FORMAT JSON
+sh $DOTFILES_DIR/scripts/general/copy-file-content.sh                           # COPY FILE CONTENT
 echo $USER                                                                      # GET USER
 uname -a                                                                        # GET SYSTEM INFORMATION
 ls -l                                                                           # SHOW PERMISSIONS

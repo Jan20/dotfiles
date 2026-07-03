@@ -246,6 +246,7 @@ Plain `.txt` files in `lists/`. Each line is a shell command — pipe through fz
 | `gcp-status.sh` | Display current gcloud account, project, and quota project |
 | `set-project.sh` | Switch active gcloud project |
 | `cloudrun-logs.sh` | Stream Cloud Run logs |
+| `select-service-account.sh` | Inspect IAM roles and permissions for a service account |
 
 ### Git (`scripts/git/`)
 | Script | Description |
