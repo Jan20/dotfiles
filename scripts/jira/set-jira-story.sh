@@ -1,9 +1,9 @@
 #!/bin/bash
 # =============================================================================
-# show-jira-stories.sh
-# Description : Fetches open Jira issues for a project, presents them via fzf,
-#               and opens the selected issue in the browser.
-# Usage       : bash show-jira-stories.sh
+# set-jira-story.sh
+# Description : Fetches open Jira issues and sets JIRA_STORY to the selection.
+# Usage       : source set-jira-story.sh
+#               eval "$(bash set-jira-story.sh)"
 # Environment : JIRA_DOMAIN, JIRA_USER, JIRA_TOKEN, JIRA_PROJECT
 # Dependencies: curl, jq, fzf, column
 # =============================================================================
@@ -59,13 +59,13 @@ formatted=$(jq -r '
     ] | @tsv
 ' <<< "$response" | column -t -s $'\t')
 
-[[ -n "$formatted" ]] || { echo "No issues found for project $JIRA_PROJECT."; exit 0; }
+[[ -n "$formatted" ]] || { echo "No issues found for project $JIRA_PROJECT." >&2; exit 0; }
 
 selection=$(
     echo "$formatted" \
     | fzf \
-        --prompt="Select issue: " \
-        --preview-window=up:7:wrap \
+        --prompt="Select story: " \
+        --preview-window=up:6:wrap \
         --no-sort \
         --height=60% \
         --border
@@ -73,10 +73,22 @@ selection=$(
 
 [[ -n "$selection" ]] || exit 0
 
-# -- Open in browser -----------------------------------------------------------
+# -- Export result -------------------------------------------------------------
 
 read -r key _ <<< "$selection"
-url="$JIRA_DOMAIN/browse/$key"
 
-echo "Opening $url..."
-open "$url"
+# Persist to .zshrc: replace existing line or append.
+zshrc="${ZDOTDIR:-$HOME}/.zshrc"
+if grep -q "^export JIRA_STORY=" "$zshrc" 2>/dev/null; then
+    sed -i '' "s|^export JIRA_STORY=.*|export JIRA_STORY=$key|" "$zshrc"
+else
+    echo "export JIRA_STORY=$key" >> "$zshrc"
+fi
+echo "Jira Story $key has been selected." >&2
+
+# When sourced, set directly; when executed, print for eval.
+if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
+    export JIRA_STORY="$key"
+else
+    echo "export JIRA_STORY=$key"
+fi

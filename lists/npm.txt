@@ -1,4 +1,5 @@
 vim $DOTFILES_DIR/lists/npm.txt               # EDIT
+npm run format -- --check                     # FORMAT FILES
 npm run lint                                  # LINT
 npx npm-check-updates -u                      # UPDATE ALL DEPENDENCIES
 nvm install node                              # UPDATE NODE

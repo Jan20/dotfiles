@@ -27,7 +27,7 @@ A terminal setup built around [fzf](https://github.com/junegunn/fzf) — every t
 The core idea is simple: store collections of shell commands, URLs, and notes in plain `.txt` files. Pipe them through `fzf` to fuzzy-search and select. Execute the selection with `eval`.
 
 ```zsh
-alias g='eval $(cat $DOTFILES_DIR/lists/git.txt | fzf)'
+alias g='eval $(fzf < $DOTFILES_DIR/lists/git.txt)'
 ```
 
 Pressing `g` opens an fzf picker of all your git commands. Select one — it runs. The same pattern applies to Docker, Kubernetes, GCloud, npm, Python, Terraform, and more.
@@ -43,7 +43,7 @@ We can also bind a key to display and execute commands:
 The concept is not limited to commands — we can store URLs and open them upon selection:
 
 ```zsh
-alias l='eval $(cat $DOTFILES_DIR/lists/web-pages.txt | fzf)'
+alias l='eval $(fzf < $DOTFILES_DIR/lists/web-pages.txt)'
 ```
 
 By pressing **v**, we can quickly adjust the `.zshrc` file, `commands.sh`, and other config files:

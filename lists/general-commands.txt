@@ -1,19 +1,23 @@
-vim $DOTFILES_DIR/lists/general-commands.txt                                    # EDIT
+vim $DOTFILES_DIR/lists/general-commands.txt                                        # EDIT
+echo $JIRA_STORY && printf %s $JIRA_STORY | pbcopy                                  # GET JIRA STORY
+export $(sh $DOTFILES_DIR/scripts/jira/set-jira-story.sh \n)                        # SET JIRA STORY
+sh $DOTFILES_DIR/scripts/jira/show-jira-stories.sh                                  # OPEN JIRA STORY
+sh $DOTFILES_DIR/scripts/jira/set-state.sh \n                                       # SET JIRA STORY STATE
 f="$(find . -name '*.json' | fzf)" && jq '.' "$f" > tmp.json && mv tmp.json "$f"    # FORMAT JSON
-sh $DOTFILES_DIR/scripts/general/copy-file-content.sh                           # COPY FILE CONTENT
-echo $USER                                                                      # GET USER
-uname -a                                                                        # GET SYSTEM INFORMATION
-ls -l                                                                           # SHOW PERMISSIONS
-source .env                                                                     # SOURCE ENV
-env | cut -d'=' -f1 | fzf | sed -e 's/^/$/' -e 's/$//g' | tr -d '\n' | pbcopy   # SELECT ENV
-echo -n "$(pwd)" | pbcopy                                                       # COPY DIR
-basename "$PWD" | pbcopy                                                        # BASENAME
-ls | fzf | tr -d '\n' | pbcopy                                                  # COPY FILENAME
-top                                                                             # GET RESOURCES
-chmod +x $(find . -maxdepth 1 | fzf)                                            # CHANGEMODE
-realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy                                    # FULL PATH
-system_profiler SPSoftwareDataType SPHardwareDataType                           # INFORMATION
-sed -i '' "s/TO_BE_REPLACED/REPLACEMENT/g" FILE.txt                             # SED
-sh $DOTFILES_DIR/scripts/general/stop-service.sh                                # STOP SERVICE
-sh $DOTFILES_DIR/scripts/general/toggle-dark-mode.sh                            # TOGGLE DARK MODE
-sh $DOTFILES_DIR/scripts/general/unzip-archive.sh                               # UNZIP ARCHIVE
+sh $DOTFILES_DIR/scripts/general/copy-file-content.sh                               # COPY FILE CONTENT
+echo $USER                                                                          # GET USER
+uname -a                                                                            # GET SYSTEM INFORMATION
+ls -l                                                                               # SHOW PERMISSIONS
+source .env                                                                         # SOURCE ENV
+env | cut -d'=' -f1 | fzf | sed -e 's/^/$/' -e 's/$//g' | tr -d '\n' | pbcopy       # SELECT ENV
+echo -n "$(pwd)" | pbcopy                                                           # COPY DIR
+basename "$PWD" | pbcopy                                                            # BASENAME
+ls | fzf | tr -d '\n' | pbcopy                                                      # COPY FILENAME
+top                                                                                 # GET RESOURCES
+chmod +x $(find . -maxdepth 1 | fzf)                                                # CHANGEMODE
+realpath $(fzf) | sed "s|^$HOME|~|" | pbcopy                                        # FULL PATH
+system_profiler SPSoftwareDataType SPHardwareDataType                               # INFORMATION
+sed -i '' "s/TO_BE_REPLACED/REPLACEMENT/g" FILE.txt                                 # SED
+sh $DOTFILES_DIR/scripts/general/stop-service.sh                                    # STOP SERVICE
+sh $DOTFILES_DIR/scripts/general/toggle-dark-mode.sh                                # TOGGLE DARK MODE
+sh $DOTFILES_DIR/scripts/general/unzip-archive.sh                                   # UNZIP ARCHIVE

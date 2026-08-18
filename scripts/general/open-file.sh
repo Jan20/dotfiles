@@ -1,11 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
 # =============================================================================
 # Script   : open-file.sh
 # Purpose  : Interactively search and open files in the current directory
 #            tree. Uses fzf for fuzzy selection with a bat-powered preview.
-#            PDFs, .pages, and .numbers files are opened with the system
-#            default application; all other files open in vim.
+#            PDFs and .numbers files are opened with the system default
+#            application; .pages files open with Pages; all other files
+#            open in vim.
 # Usage    : ./open-file.sh
 # Requires : find, fzf, bat, file, vim, open (macOS)
 # =============================================================================
@@ -33,6 +34,7 @@ file=$(
       -name "target"       -o \
       -name ".git"         \
     \) -prune \
+    -o \( -type d -name "*.pages" -print -prune \) \
     -o -type f \
       ! -name "*.pyc"       \
       ! -name "__init__.py" \
@@ -53,7 +55,11 @@ file=$(
 # --- Determine how to open the selected file ----------------------------------
 
 case "$file" in
-  *.pdf | *.pages | *.numbers | *.jpg | *.jpeg | *.png | *.PNG)
+  *.pages)
+    open -a Pages "$file"
+    exit 0
+    ;;
+  *.pdf | *.numbers | *.jpg | *.jpeg | *.png | *.PNG)
     open "$file"
     exit 0
     ;;

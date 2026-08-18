@@ -6,14 +6,18 @@ description: Optimizes shell scripts for readability, maintainability, and POSIX
 Optimize this shell script following these rules:
 
 **Style & Structure**
-- POSIX `sh` only — no bash-specific syntax (`[[`, `local`, `$'...'`, etc.)
-- Use `set -eu` at the top for fail-fast behavior
 - Use lowercase variable names for locals; uppercase only for exported/env vars
-- Prefer `printf` over `echo` for portability
+- Prefer `echo` over `printf` for readability unless formatting is required
 - Prefer jq over grep if applicable for JSON parsing
 - Prefer fzf for interactive selections if applicable
-- Use a helper function for error handling and logging
+- Don't use any helper functions
 - Prefer Early-exit pattern over nested ifs
+- Always use bash, always convert sh to bash scripts
+- Always prioritize readability and maintainability over brevity
+- Avoid loops when possible; use `find` or `xargs` instead
+  - Avoid `awk`; use `sed` if possible
+- Make use of jq for JSON parsing and manipulation
+- Use curl for HTTP requests instead of wget
 
 **Header**
 Add a comment block at the top with:
