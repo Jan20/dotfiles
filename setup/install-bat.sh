@@ -1,99 +1,103 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # =============================================================================
 # install-bat.sh
-# Description : Installs the latest bat release binary from GitHub into
-#               $SOURCE_CODE_HOME/tools/bat without relying on a package manager.
+# Description : Installs a fixed bat release binary from GitHub into
+#               $TOOLS_DIR/bat without relying on a package manager.
+# Usage       : bash install-bat.sh
+# Environment : TOOLS_DIR — required, e.g. export TOOLS_DIR="$HOME/Developer/tools"
 # Dependencies: curl, tar, find
-# Usage       : sh install-bat.sh
-# Environment : SOURCE_CODE_HOME — required, e.g. export SOURCE_CODE_HOME="$HOME/Developer"
 # =============================================================================
 
-# -- Configuration ------------------------------------------------------------
+bat_version="0.26.0"
 
-BAT_REPO="sharkdp/bat"
-BAT_API="https://api.github.com/repos/$BAT_REPO/releases/latest"
-BAT_PLATFORM="aarch64-apple-darwin"
+# -- Preflight -----------------------------------------------------------------
 
-# -- Helpers ------------------------------------------------------------------
+if ! command -v curl >/dev/null 2>&1; then
+    echo "Error: curl is required but not installed." >&2
+    exit 1
+fi
 
-die() {
-    echo "Error: $1" >&2
-    exit "${2:-1}"
-}
+if ! command -v tar >/dev/null 2>&1; then
+    echo "Error: tar is required but not installed." >&2
+    exit 1
+fi
 
-info() {
-    echo "==> $1"
-}
+if [ -z "$TOOLS_DIR" ]; then
+    echo "Error: TOOLS_DIR is not set. Export it before running this script." >&2
+    exit 1
+fi
 
-# -- Preflight ----------------------------------------------------------------
+# -- Detect architecture ---------------------------------------------------------
 
-command -v curl >/dev/null 2>&1 || die "curl is required but not installed."
-command -v tar  >/dev/null 2>&1 || die "tar is required but not installed."
+arch=$(uname -m)
 
-[ -n "$SOURCE_CODE_HOME" ] || die "SOURCE_CODE_HOME is not set. Export it before running this script."
-
-# -- Detect architecture automatically ----------------------------------------
-
-ARCH=$(uname -m)
-case "$ARCH" in
-    arm64)  BAT_PLATFORM="aarch64-apple-darwin" ;;
-    x86_64) BAT_PLATFORM="x86_64-apple-darwin"  ;;
-    *)      die "Unsupported architecture: $ARCH" ;;
+case "$arch" in
+    arm64) bat_platform="aarch64-apple-darwin" ;;
+    x86_64) bat_platform="x86_64-apple-darwin" ;;
+    *)
+        echo "Error: Unsupported architecture: $arch" >&2
+        exit 1
+        ;;
 esac
 
-# -- Resolve latest version ---------------------------------------------------
+echo "==> Installing bat $bat_version for $bat_platform..."
 
-info "Fetching latest bat release version..."
-BAT_VERSION=$(
-    curl --silent --fail "$BAT_API" \
-    | grep '"tag_name"' \
-    | sed 's/.*"tag_name": *"v\([^"]*\)".*/\1/'
-) || die "Failed to fetch latest bat version from GitHub API."
+# -- Prepare directories ---------------------------------------------------------
 
-[ -n "$BAT_VERSION" ] || die "Could not parse bat version from GitHub API response."
+bat_dir="$TOOLS_DIR/bat"
+tmp_dir=$(mktemp -d)
 
-info "Latest version: $BAT_VERSION"
+if ! mkdir -p "$bat_dir/bin"; then
+    echo "Error: Failed to create '$bat_dir/bin'." >&2
+    exit 1
+fi
 
-# -- Prepare directories ------------------------------------------------------
+# -- Download ----------------------------------------------------------------------
 
-BAT_DIR="$SOURCE_CODE_HOME/tools/bat"
-TMP_DIR=$(mktemp -d)
+archive="bat-v${bat_version}-${bat_platform}.tar.gz"
+download_url="https://github.com/sharkdp/bat/releases/download/v${bat_version}/${archive}"
 
-mkdir -p "$BAT_DIR/bin" || die "Failed to create '$BAT_DIR/bin'."
+echo "==> Downloading $archive..."
+if ! curl --silent --fail --location "$download_url" --output "$tmp_dir/$archive"; then
+    echo "Error: Failed to download bat from '$download_url'." >&2
+    exit 1
+fi
 
-# -- Download -----------------------------------------------------------------
+# -- Extract binary ------------------------------------------------------------------
 
-ARCHIVE="bat-v${BAT_VERSION}-${BAT_PLATFORM}.tar.gz"
-DOWNLOAD_URL="https://github.com/$BAT_REPO/releases/download/v${BAT_VERSION}/${ARCHIVE}"
+echo "==> Extracting..."
+if ! tar -xzf "$tmp_dir/$archive" -C "$tmp_dir"; then
+    echo "Error: Failed to extract archive." >&2
+    exit 1
+fi
 
-info "Downloading $ARCHIVE..."
-curl --silent --fail --location "$DOWNLOAD_URL" \
-    --output "$TMP_DIR/$ARCHIVE" \
-    || die "Failed to download bat from '$DOWNLOAD_URL'."
+extracted_bin=$(find "$tmp_dir" -name "bat" -type f | head -n 1)
+if [ -z "$extracted_bin" ]; then
+    echo "Error: bat binary not found in extracted archive." >&2
+    exit 1
+fi
 
-# -- Extract binary -----------------------------------------------------------
+if ! mv "$extracted_bin" "$bat_dir/bin/bat"; then
+    echo "Error: Failed to move bat binary to '$bat_dir/bin'." >&2
+    exit 1
+fi
 
-info "Extracting..."
-tar -xzf "$TMP_DIR/$ARCHIVE" -C "$TMP_DIR" || die "Failed to extract archive."
+if ! chmod +x "$bat_dir/bin/bat"; then
+    echo "Error: Failed to make bat binary executable." >&2
+    exit 1
+fi
 
-EXTRACTED_BIN=$(find "$TMP_DIR" -name "bat" -type f | head -n 1)
-[ -n "$EXTRACTED_BIN" ] || die "bat binary not found in extracted archive."
+# -- Cleanup -------------------------------------------------------------------------
 
-mv "$EXTRACTED_BIN" "$BAT_DIR/bin/bat" || die "Failed to move bat binary to '$BAT_DIR/bin'."
-chmod +x "$BAT_DIR/bin/bat"            || die "Failed to make bat binary executable."
+rm -rf "$tmp_dir"
 
-# -- Cleanup ------------------------------------------------------------------
+# -- Verify --------------------------------------------------------------------------
 
-rm -rf "$TMP_DIR"
+if ! "$bat_dir/bin/bat" --version >/dev/null 2>&1; then
+    echo "Error: bat binary not working after install." >&2
+    exit 1
+fi
 
-# -- Verify -------------------------------------------------------------------
-
-"$BAT_DIR/bin/bat" --version >/dev/null 2>&1 \
-    || die "bat binary not working after install."
-
-info "bat $("$BAT_DIR/bin/bat" --version) installed successfully."
-info "Binary: $BAT_DIR/bin/bat"
-info ""
-info "Add to your zshrc if not already present:"
-info "  export PATH=\"\$SOURCE_CODE_HOME/tools/bat/bin:\$PATH\""
+echo "==> bat $("$bat_dir/bin/bat" --version) installed successfully."
+echo "==> Binary: $bat_dir/bin/bat"

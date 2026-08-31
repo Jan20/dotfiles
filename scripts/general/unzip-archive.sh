@@ -1,56 +1,67 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # =============================================================================
 # unzip-archive.sh
 # Description : Fuzzy-finds a zip file in the current directory and extracts
 #               it into a subdirectory named after the archive.
+# Usage       : bash unzip-archive.sh
 # Dependencies: find, fzf, unzip
-# Usage       : sh unzip-archive.sh
 # =============================================================================
 
-# -- Configuration ------------------------------------------------------------
-
-SEARCH_DIR="${SEARCH_DIR:-$PWD}"
-ARCHIVE_EXT="zip"
-
-# -- Helpers ------------------------------------------------------------------
-
-die() {
-    echo "Error: $1" >&2
-    exit "${2:-1}"
-}
+search_dir="${SEARCH_DIR:-$PWD}"
+archive_ext="zip"
 
 # -- Preflight ----------------------------------------------------------------
 
-command -v fzf   >/dev/null 2>&1 || die "fzf is required but not installed."
-command -v unzip >/dev/null 2>&1 || die "unzip is required but not installed."
+if ! command -v fzf >/dev/null 2>&1; then
+    echo "Error: fzf is required but not installed." >&2
+    exit 1
+fi
 
-# -- Select archive -----------------------------------------------------------
+if ! command -v unzip >/dev/null 2>&1; then
+    echo "Error: unzip is required but not installed." >&2
+    exit 1
+fi
 
-ARCHIVE=$(
-    find "$SEARCH_DIR"          \
-        -maxdepth 1             \
-        -name "*.${ARCHIVE_EXT}"\
-        -type f                 \
-    | sed "s|$SEARCH_DIR/||"    \
-    | fzf                       \
-        --prompt="Select archive: "                             \
-        --preview="unzip -l $SEARCH_DIR/{} | tail -n +4"
+# -- Select archive ---------------------------------------------------------------
+
+archive=$(
+    find "$search_dir"           \
+        -maxdepth 1               \
+        -name "*.${archive_ext}"  \
+        -type f                   \
+    | sed "s|$search_dir/||"     \
+    | fzf                        \
+        --prompt="Select archive: " \
+        --preview="unzip -l $search_dir/{} | tail -n +4"
 )
 
-[ -z "$ARCHIVE" ] && die "No archive selected."
+if [ -z "$archive" ]; then
+    echo "Error: No archive selected." >&2
+    exit 1
+fi
 
-# -- Extract ------------------------------------------------------------------
+# -- Extract ------------------------------------------------------------------------
 
-ARCHIVE_PATH="$SEARCH_DIR/$ARCHIVE"
-OUTPUT_DIR="$SEARCH_DIR/${ARCHIVE%.${ARCHIVE_EXT}}"
+archive_path="$search_dir/$archive"
+output_dir="$search_dir/${archive%."${archive_ext}"}"
 
-echo "Extracting '$ARCHIVE' → '$OUTPUT_DIR'"
+echo "Extracting '$archive' → '$output_dir'"
 
-mkdir -p "$OUTPUT_DIR"                          || die "Failed to create '$OUTPUT_DIR'."
-unzip -q "$ARCHIVE_PATH" -d "$OUTPUT_DIR"       || die "Failed to extract '$ARCHIVE_PATH'."
+if ! mkdir -p "$output_dir"; then
+    echo "Error: Failed to create '$output_dir'." >&2
+    exit 1
+fi
 
-rm "$ARCHIVE_PATH" || die "Extraction succeeded but failed to delete '$ARCHIVE_PATH'."
-echo "Deleted '$ARCHIVE'."
+if ! unzip -q "$archive_path" -d "$output_dir"; then
+    echo "Error: Failed to extract '$archive_path'." >&2
+    exit 1
+fi
 
+if ! rm "$archive_path"; then
+    echo "Error: Extraction succeeded but failed to delete '$archive_path'." >&2
+    exit 1
+fi
+
+echo "Deleted '$archive'."
 echo "Done."

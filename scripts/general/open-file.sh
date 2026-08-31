@@ -1,28 +1,28 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # =============================================================================
-# Script   : open-file.sh
-# Purpose  : Interactively search and open files in the current directory
-#            tree. Uses fzf for fuzzy selection with a bat-powered preview.
-#            PDFs and .numbers files are opened with the system default
-#            application; .pages files open with Pages; all other files
-#            open in vim.
-# Usage    : ./open-file.sh
-# Requires : find, fzf, bat, file, vim, open (macOS)
+# open-file.sh
+# Description : Interactively search and open files in the current directory
+#               tree. Uses fzf for fuzzy selection with a bat-powered preview.
+#               PDFs, images and .numbers files open with the system default
+#               application; .pages files open with Pages; everything else
+#               opens in vim.
+# Usage       : bash open-file.sh
+# Dependencies: find, fzf, bat, vim, open (macOS)
 # =============================================================================
 
-set -eu
+set -euo pipefail
 
-# --- Dependency check ---------------------------------------------------------
+# -- Preflight --------------------------------------------------------------------
 
-for cmd in find fzf bat file vim; do
-  if ! command -v "$cmd" > /dev/null 2>&1; then
-    printf "Error: required command '%s' is not installed.\n" "$cmd" >&2
+for cmd in find fzf bat vim; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "Error: required command '$cmd' is not installed." >&2
     exit 1
   fi
 done
 
-# --- Find files & excluding noisy directories ---------------------------------
+# -- Find files, excluding noisy directories ---------------------------------------
 
 file=$(
   find . \
@@ -48,11 +48,13 @@ file=$(
       --preview-window=right:60%
 )
 
-# --- Exit cleanly if no file was selected -------------------------------------
+# -- Exit cleanly if no file was selected -------------------------------------------
 
-[ -z "$file" ] && exit 0
+if [ -z "$file" ]; then
+  exit 0
+fi
 
-# --- Determine how to open the selected file ----------------------------------
+# -- Determine how to open the selected file ----------------------------------------
 
 case "$file" in
   *.pages)

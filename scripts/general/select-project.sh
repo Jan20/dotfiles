@@ -1,42 +1,33 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # =============================================================================
 # select-project.sh
 # Description : Fuzzy-finds a directory under ~/Developer, previews its
 #               contents, and changes into the selected directory.
-# Dependencies: find, fzf, ls
 # Usage       : . ./select-project.sh  (must be sourced to affect current shell)
+# Dependencies: find, fzf, ls
 # =============================================================================
 
-# -- Configuration ------------------------------------------------------------
+search_root="${SEARCH_ROOT:-$HOME/Developer}"
+max_depth=2
 
-SEARCH_ROOT="${SEARCH_ROOT:-$HOME/Developer}"
-MAX_DEPTH=2
+# -- Select directory -----------------------------------------------------------
 
-# -- Helpers ------------------------------------------------------------------
-
-die() {
-    echo "Error: $1" >&2
-    return "${2:-1}"
-}
-
-# -- Main ---------------------------------------------------------------------
-
-DIRECTORY=$(
-    find "$SEARCH_ROOT"             \
-        -maxdepth "$MAX_DEPTH"      \
-        \( -name node_modules       \
-        -o -name .git               \
-        -o -name .idea              \
-        -o -name .dist \) -prune    \
-        -o -type d -print           \
-    | sed "s|^$SEARCH_ROOT|.|"             \
-    | fzf --preview="ls $(echo "$SEARCH_ROOT")/{}"
+directory=$(
+    find "$search_root"          \
+        -maxdepth "$max_depth"   \
+        \( -name node_modules    \
+        -o -name .git            \
+        -o -name .idea           \
+        -o -name .dist \) -prune \
+        -o -type d -print        \
+    | sed "s|^$search_root|.|"   \
+    | fzf --preview="ls $search_root/{}"
 )
 
-if [ -z "$DIRECTORY" ]; then
-  echo "$PWD"
-  exit 1
+if [ -z "$directory" ]; then
+    echo "$PWD"
+    return 1
 fi
 
-echo "$DIRECTORY" | sed "s|.|$SEARCH_ROOT|"
+echo "${directory/#./$search_root}"

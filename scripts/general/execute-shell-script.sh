@@ -1,18 +1,18 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # =============================================================================
-# Script   : execute-shell-script.sh
-# Purpose  : Interactively browse and execute shell scripts in the current
-#            directory tree using fzf for selection and bat for previewing.
-# Usage    : ./execute-shell-script.sh
-# Requires : fzf, bat, find, sh
+# execute-shell-script.sh
+# Description : Interactively browse and execute shell scripts in the current
+#               directory tree using fzf for selection and bat for previewing.
+# Usage       : bash execute-shell-script.sh
+# Dependencies: find, fzf, bat, bash
 # =============================================================================
 
 set -euo pipefail
 
-# --- Configuration ------------------------------------------------------------
+# -- Configuration --------------------------------------------------------------
 
-EXCLUDED_DIRS=(
+excluded_dirs=(
   "node_modules"
   ".idea"
   ".angular"
@@ -21,25 +21,24 @@ EXCLUDED_DIRS=(
   ".git"
 )
 
-# --- Dependency check ---------------------------------------------------------
+# -- Preflight --------------------------------------------------------------------
 
-for cmd in find fzf bat sh; do
-  if ! command -v "$cmd" > /dev/null 2>&1; then
-    printf "Error: required command '%s' is not installed.\n" "$cmd" >&2
+for cmd in find fzf bat bash; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "Error: required command '$cmd' is not installed." >&2
     exit 1
   fi
 done
 
-# --- Build the -prune expression ----------------------------------------------
+# -- Build the -prune expression ----------------------------------------------------
 
 prune_args=()
-for dir in "${EXCLUDED_DIRS[@]}"; do
+for dir in "${excluded_dirs[@]}"; do
   prune_args+=(-name "$dir" -o)
 done
-# Remove the trailing -o
-unset "prune_args[${#prune_args[@]}-1]"
+unset "prune_args[${#prune_args[@]}-1]"   # remove trailing -o
 
-# --- Find all .sh files -------------------------------------------------------
+# -- Find all .sh files ---------------------------------------------------------------
 
 file=$(
   find . \
@@ -52,12 +51,12 @@ file=$(
       --preview-window=right:60%
 )
 
-# --- Execute selected script --------------------------------------------------
+# -- Execute selected script -----------------------------------------------------------
 
-if [ -n "$file" ]; then
-  printf "Running: %s\n" "$file"
-  sh "$file"
-else
-  printf "No script selected.\n" >&2
+if [ -z "$file" ]; then
+  echo "No script selected." >&2
   exit 0
 fi
+
+echo "Running: $file"
+bash "$file"

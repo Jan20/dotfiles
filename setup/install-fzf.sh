@@ -1,72 +1,94 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # =============================================================================
 # install-fzf.sh
 # Description : Installs fzf from the official GitHub repository into
-#               $SOURCE_CODE_HOME/tools/fzf without relying on a package manager.
+#               $TOOLS_DIR/fzf without relying on a package manager.
 #               Also installs shell keybindings and fuzzy completion.
 # Dependencies: git
-# Usage       : sh install-fzf.sh
-# Environment : SOURCE_CODE_HOME — required, e.g. export SOURCE_CODE_HOME="$HOME/Developer"
+# Usage       : bash install-fzf.sh
+# Environment : TOOLS_DIR — required, e.g. export TOOLS_DIR="$HOME/Developer/tools"
 # =============================================================================
 
 # -- Configuration ------------------------------------------------------------
 
-FZF_REPO="https://github.com/junegunn/fzf.git"
-FZF_VERSION="${FZF_VERSION:-latest}"   # pin to e.g. "0.62.0" for reproducibility
-
-# -- Helpers ------------------------------------------------------------------
-
-die() {
-    echo "Error: $1" >&2
-    exit "${2:-1}"
-}
-
-info() {
-    echo "==> $1"
-}
+fzf_repo="https://github.com/junegunn/fzf.git"
+fzf_version="${FZF_VERSION:-latest}"   # pin to e.g. "0.62.0" for reproducibility
 
 # -- Preflight ----------------------------------------------------------------
 
-command -v git >/dev/null 2>&1 || die "git is required but not installed."
+if ! command -v git >/dev/null 2>&1; then
+    echo "Error: git is required but not installed." >&2
+    exit 1
+fi
 
-[ -n "$SOURCE_CODE_HOME" ] || die "SOURCE_CODE_HOME is not set. Export it before running this script."
+if [ -z "$TOOLS_DIR" ]; then
+    echo "Error: TOOLS_DIR is not set. Export it before running this script." >&2
+    exit 1
+fi
 
-FZF_DIR="$SOURCE_CODE_HOME/tools/fzf"
+fzf_dir="$TOOLS_DIR/fzf"
 
 # -- Install or update --------------------------------------------------------
 
-if [ -d "$FZF_DIR" ]; then
-    info "fzf already cloned at '$FZF_DIR'. Pulling latest changes..."
-    git -C "$FZF_DIR" pull --rebase --quiet || die "Failed to update fzf repo."
-else
-    info "Cloning fzf into '$FZF_DIR'..."
-    if [ "$FZF_VERSION" = "latest" ]; then
-        git clone --depth 1 "$FZF_REPO" "$FZF_DIR" || die "Failed to clone fzf."
+if [ -d "$fzf_dir" ]; then
+    echo "==> fzf already cloned at '$fzf_dir'. Updating..."
+
+    if ! git -C "$fzf_dir" fetch --tags --quiet; then
+        echo "Error: Failed to fetch fzf updates." >&2
+        exit 1
+    fi
+
+    if [ "$fzf_version" = "latest" ]; then
+        if ! git -C "$fzf_dir" checkout master --quiet; then
+            echo "Error: Failed to checkout fzf master branch." >&2
+            exit 1
+        fi
+
+        if ! git -C "$fzf_dir" pull --rebase --quiet; then
+            echo "Error: Failed to update fzf repo." >&2
+            exit 1
+        fi
     else
-        git clone --depth 1 --branch "$FZF_VERSION" "$FZF_REPO" "$FZF_DIR" \
-            || die "Failed to clone fzf at version '$FZF_VERSION'."
+        if ! git -C "$fzf_dir" checkout "$fzf_version" --quiet; then
+            echo "Error: Failed to checkout fzf version '$fzf_version'." >&2
+            exit 1
+        fi
+    fi
+else
+    echo "==> Cloning fzf into '$fzf_dir'..."
+
+    if [ "$fzf_version" = "latest" ]; then
+        if ! git clone --depth 1 "$fzf_repo" "$fzf_dir"; then
+            echo "Error: Failed to clone fzf." >&2
+            exit 1
+        fi
+    else
+        if ! git clone --depth 1 --branch "$fzf_version" "$fzf_repo" "$fzf_dir"; then
+            echo "Error: Failed to clone fzf at version '$fzf_version'." >&2
+            exit 1
+        fi
     fi
 fi
 
 # -- Run fzf install script ---------------------------------------------------
 
-info "Running fzf install script..."
-"$FZF_DIR/install" \
-    --bin            \
-    --key-bindings   \
-    --completion     \
-    --no-update-rc   \
-    || die "fzf install script failed."
+echo "==> Running fzf install script..."
+if ! "$fzf_dir/install" --bin --key-bindings --completion --no-update-rc; then
+    echo "Error: fzf install script failed." >&2
+    exit 1
+fi
 
 # -- Verify -------------------------------------------------------------------
 
-"$FZF_DIR/bin/fzf" --version >/dev/null 2>&1 \
-    || die "fzf binary not found after install."
+if ! "$fzf_dir/bin/fzf" --version >/dev/null 2>&1; then
+    echo "Error: fzf binary not found after install." >&2
+    exit 1
+fi
 
-info "fzf $("$FZF_DIR/bin/fzf" --version) installed successfully."
-info "Binary: $FZF_DIR/bin/fzf"
-info ""
-info "Add to your zshrc if not already present:"
-info "  export PATH=\"\$SOURCE_CODE_HOME/tools/fzf/bin:\$PATH\""
-info "  [ -f \$SOURCE_CODE_HOME/tools/fzf/.fzf.zsh ] && source \$SOURCE_CODE_HOME/tools/fzf/.fzf.zsh"
+echo "==> fzf $("$fzf_dir/bin/fzf" --version) installed successfully."
+echo "==> Binary: $fzf_dir/bin/fzf"
+echo "==>"
+echo "==> Add to your zshrc if not already present:"
+echo "==>   export PATH=\"\$TOOLS_DIR/fzf/bin:\$PATH\""
+echo "==>   [ -f \$TOOLS_DIR/fzf/.fzf.zsh ] && source \$TOOLS_DIR/fzf/.fzf.zsh"

@@ -1,41 +1,37 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # =============================================================================
-# select-subdir.sh
+# select-dir.sh
 # Description : Fuzzy-finds a sub-directory under the current working directory,
 #               previews its contents or README, and changes into it.
+# Usage       : . ./select-dir.sh  (must be sourced to affect current shell)
 # Dependencies: find, fzf
-# Usage       : . ./select-subdir.sh  (must be sourced to affect current shell)
 # =============================================================================
 
-# -- Configuration ------------------------------------------------------------
-
-MAX_DEPTH=5
-
-# -- Helpers ------------------------------------------------------------------
-
-die() {
-    echo "Error: $1" >&2
-    return "${2:-1}"
-}
+max_depth=5
 
 # -- Preflight ----------------------------------------------------------------
 
-command -v fzf >/dev/null 2>&1 || die "fzf is required but not installed."
+if ! command -v fzf >/dev/null 2>&1; then
+    echo "Error: fzf is required but not installed." >&2
+    return 1
+fi
 
-# -- Main ---------------------------------------------------------------------
+# -- Select directory -----------------------------------------------------------
 
-DIRECTORY=$(
-    find .                          \
-        -maxdepth "$MAX_DEPTH"      \
-        \( -name node_modules       \
-        -o -name .git               \
-        -o -name tools \) -prune    \
-        -o -type d -print           \
-    | sed 's|^\./||'                \
+directory=$(
+    find .                       \
+        -maxdepth "$max_depth"   \
+        \( -name node_modules    \
+        -o -name .git            \
+        -o -name tools \) -prune \
+        -o -type d -print        \
+    | sed 's|^\./||'             \
     | fzf --preview="[ -f {}/README.md ] && cat {}/README.md || ls --color=always {}"
 )
 
-[ -z "$DIRECTORY" ] && echo .
-
-echo $DIRECTORY
+if [ -z "$directory" ]; then
+    echo .
+else
+    echo "$directory"
+fi
