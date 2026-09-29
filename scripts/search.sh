@@ -1,15 +1,35 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Prompt the user for a search term
-read -p "Enter the search term: " search_term
+# =============================================================================
+# search.sh
+# Description : Searches file contents for a term (excluding node_modules),
+#               previews matches with bat, and opens the selection in vim.
+# Usage       : bash search.sh
+# Dependencies: grep, fzf, bat, vim
+# =============================================================================
 
-# Use grep to search for the term, exclude node_modules, and pipe results to fzf
-selected_file=$(grep -rl --exclude-dir=node_modules "$search_term" . | fzf --preview="bat --color=always {}")
+set -euo pipefail
 
-# Check if a file was selected
-if [ -n "$selected_file" ]; then
-  # Open the selected file in vim
-  vim "$selected_file"
-else
-  echo "No file selected or no match found."
+# -- Preflight ------------------------------------------------------------------
+
+for cmd in grep fzf bat vim; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+        echo "Error: $cmd is required but not installed." >&2
+        exit 1
+    fi
+done
+
+# -- Search and select --------------------------------------------------------------
+
+echo -n "Enter the search term: "
+read -r search_term
+
+selected_file=$(grep -rl --exclude-dir=node_modules "$search_term" . | fzf --preview="bat --color=always {}" || true)
+
+if [ -z "$selected_file" ]; then
+    echo "No file selected or no match found."
+    exit 0
 fi
+
+vim "$selected_file"
+

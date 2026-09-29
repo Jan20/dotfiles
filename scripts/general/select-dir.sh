@@ -20,17 +20,23 @@ fi
 # -- Select directory -----------------------------------------------------------
 
 directory=$(
-    find .                       \
-        -maxdepth "$max_depth"   \
-        \( -name node_modules    \
-        -o -name .git            \
-        -o -name tools \) -prune \
-        -o -type d -print        \
-    | sed 's|^\./||'             \
+    find .                              \
+        -maxdepth "$max_depth"          \
+        \( -name node_modules           \
+        -o -name .git                   \
+        -o -name tools \) -prune        \
+        -o \( -name "*.numbers"         \
+        -o -name "*.pages" \)           \
+        -print -prune                   \
+        -o -type d -print               \
+    | sed 's|^\./||'                    \
     | fzf --preview="[ -f {}/README.md ] && cat {}/README.md || ls --color=always {}"
 )
 
 if [ -z "$directory" ]; then
+    echo .
+elif printf '%s\n' "$directory" | grep -qE '\.(numbers|pages)$'; then
+    open "$directory"
     echo .
 else
     echo "$directory"

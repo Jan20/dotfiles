@@ -1,70 +1,53 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # =============================================================================
 # gcp-status.sh
 # Description : Displays the current gcloud account, project, and quota project
 #               with colour highlighting for known prefixes (e.g. qwiklabs).
+# Usage       : bash gcp-status.sh
 # Dependencies: gcloud
-# Usage       : ./gcp-status.sh
 # =============================================================================
 
-# -- Configuration ------------------------------------------------------------
+set -euo pipefail
 
-# Prefixes that trigger green highlighting
-ACCOUNT_PREFIX="student"
-PROJECT_PREFIX="qwiklabs"
+# -- Configuration ----------------------------------------------------------------
 
-# Table layout
-COL_LABEL_WIDTH=15   # width of  the left label column
-COL_VALUE_WIDTH=37   # width of the right value column
-BORDER="+------------------------------------------------------+"
+account_prefix="student"
+project_prefix="qwiklabs"
 
-# -- Colours ------------------------------------------------------------------
+col_label_width=15
+col_value_width=37
+border="+------------------------------------------------------+"
 
-GREEN='\033[0;32m'
-RESET='\033[0m'
+green=$'\033[0;32m'
+reset=$'\033[0m'
 
-# -- Helpers ------------------------------------------------------------------
+# -- Preflight ------------------------------------------------------------------
 
-die() {
-    echo "Error: $1" >&2
-    exit "${2:-1}"
-}
+if ! command -v gcloud >/dev/null 2>&1; then
+    echo "Error: gcloud is required but not installed." >&2
+    exit 1
+fi
 
-get_gcloud_value() {
-    gcloud config get-value "$1" 2>/dev/null || echo "N/A"
-}
+# -- Fetch values -----------------------------------------------------------------
 
-# Prints a value padded to COL_VALUE_WIDTH, in green if it matches the prefix.
-colorize() {
-    value="$1"
-    prefix="$2"
+account=$(gcloud config get-value account 2>/dev/null || echo "N/A")
+project=$(gcloud config get-value project 2>/dev/null || echo "N/A")
+quota_project=$(gcloud config get-value billing/quota_project 2>/dev/null || echo "N/A")
+
+# -- Print table ------------------------------------------------------------------
+
+echo "$border"
+
+for row in "GCloud User:|$account|$account_prefix" "GCP Project:|$project|$project_prefix" "Quota Project:|$quota_project|$project_prefix"; do
+    IFS='|' read -r label value prefix <<< "$row"
+
     case "$value" in
-        "$prefix"*) printf "${GREEN}%-${COL_VALUE_WIDTH}s${RESET}" "$value" ;;
-        *)          printf "%-${COL_VALUE_WIDTH}s"                  "$value" ;;
+        "$prefix"*) colored_value=$(printf "${green}%-${col_value_width}s${reset}" "$value") ;;
+        *)          colored_value=$(printf "%-${col_value_width}s" "$value") ;;
     esac
-}
 
-print_row() {
-    label="$1"
-    value="$2"
-    prefix="$3"
-    printf "| %-${COL_LABEL_WIDTH}s %s|\n" "$label" "$(colorize "$value" "$prefix")"
-}
+    printf "| %-${col_label_width}s %s|\n" "$label" "$colored_value"
+done
 
-# -- Preflight ----------------------------------------------------------------
-
-command -v gcloud >/dev/null 2>&1 || die "gcloud is required but not installed."
-
-# -- Main ---------------------------------------------------------------------
-
-# Fetch all values in one subshell to avoid 3 separate gcloud calls blocking sequentially
-ACCOUNT=$(get_gcloud_value account)
-PROJECT=$(get_gcloud_value project)
-QUOTA_PROJECT=$(get_gcloud_value billing/quota_project)
-
-echo "$BORDER"
-print_row "GCloud User:"   "$ACCOUNT"       "$ACCOUNT_PREFIX"
-print_row "GCP Project:"   "$PROJECT"       "$PROJECT_PREFIX"
-print_row "Quota Project:" "$QUOTA_PROJECT" "$PROJECT_PREFIX"
-echo "$BORDER"
+echo "$border"

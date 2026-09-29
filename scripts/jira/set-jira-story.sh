@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # =============================================================================
 # set-jira-story.sh
 # Description : Fetches open Jira issues and sets JIRA_STORY to the selection.
@@ -13,12 +13,18 @@ set -euo pipefail
 # -- Preflight -----------------------------------------------------------------
 
 for cmd in curl jq fzf column; do
-    command -v "$cmd" >/dev/null 2>&1 || { echo "Error: $cmd is required but not installed." >&2; exit 1; }
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+        echo "Error: $cmd is required but not installed." >&2
+        exit 1
+    fi
 done
 
 required_vars=(JIRA_DOMAIN JIRA_USER JIRA_TOKEN JIRA_PROJECT)
 for var in "${required_vars[@]}"; do
-    [[ -n "${!var:-}" ]] || { echo "Error: $var is not set." >&2; exit 1; }
+    if [ -z "${!var:-}" ]; then
+        echo "Error: $var is not set." >&2
+        exit 1
+    fi
 done
 
 # -- Configuration -------------------------------------------------------------
@@ -27,7 +33,7 @@ max_results=100
 
 # -- Fetch issues --------------------------------------------------------------
 
-payload=$(jq -n \
+if ! payload=$(jq -n \
     --arg project "$JIRA_PROJECT" \
     --argjson maxResults "$max_results" \
     '{
@@ -35,9 +41,12 @@ payload=$(jq -n \
         fields: ["summary", "status", "assignee"],
         maxResults: $maxResults
     }'
-) || { echo 'Error: Failed to build request payload.' >&2; exit 1; }
+); then
+    echo "Error: Failed to build request payload." >&2
+    exit 1
+fi
 
-response=$(curl \
+if ! response=$(curl \
     --silent \
     --fail-with-body \
     --request POST \
@@ -46,7 +55,11 @@ response=$(curl \
     --header "Accept: application/json" \
     --header "Content-Type: application/json" \
     --data "$payload"
-) || { echo "Error: Jira API request failed." >&2; echo "$response" >&2; exit 1; }
+); then
+    echo "Error: Jira API request failed." >&2
+    echo "$response" >&2
+    exit 1
+fi
 
 # -- Parse and select ----------------------------------------------------------
 
@@ -59,19 +72,21 @@ formatted=$(jq -r '
     ] | @tsv
 ' <<< "$response" | column -t -s $'\t')
 
-[[ -n "$formatted" ]] || { echo "No issues found for project $JIRA_PROJECT." >&2; exit 0; }
+if [ -z "$formatted" ]; then
+    echo "No issues found for project $JIRA_PROJECT." >&2
+    exit 0
+fi
 
-selection=$(
-    echo "$formatted" \
-    | fzf \
-        --prompt="Select story: " \
-        --preview-window=up:6:wrap \
-        --no-sort \
-        --height=60% \
-        --border
-)
+selection=$(echo "$formatted" | fzf \
+    --prompt="Select story: " \
+    --preview-window=up:6:wrap \
+    --no-sort \
+    --height=60% \
+    --border || true)
 
-[[ -n "$selection" ]] || exit 0
+if [ -z "$selection" ]; then
+    exit 0
+fi
 
 # -- Export result -------------------------------------------------------------
 

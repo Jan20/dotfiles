@@ -1,45 +1,51 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # =============================================================================
-# setup.sh
+# create-environment.sh
 # Description : Creates (if needed) and activates a Python virtual environment,
 #               then upgrades core packaging tools.
+# Usage       : . ./create-environment.sh           (must be sourced to activate)
+#               . ./create-environment.sh --create   (force recreate the venv)
 # Dependencies: python3
-# Usage       : . ./venv.sh           (must be sourced to activate in current shell)
-#               . ./venv.sh --create  (force recreate the venv)
 # =============================================================================
 
-# -- Configuration ------------------------------------------------------------
-
-VENV_DIR="${VENV_DIR:-venv}"
-PYTHON="${PYTHON:-python3}"
-
-# -- Helpers ------------------------------------------------------------------
-
-die() {
-    echo "Error: $1" >&2
-    return "${2:-1}"
-}
+venv_dir="${VENV_DIR:-venv}"
+python_bin="${PYTHON:-python3}"
 
 # -- Preflight ----------------------------------------------------------------
 
-command -v "$PYTHON" >/dev/null 2>&1 || die "Python not found. Set PYTHON= to override."
+if ! command -v "$python_bin" >/dev/null 2>&1; then
+    echo "Error: Python not found. Set PYTHON= to override." >&2
+    return 1
+fi
 
 # -- Create venv (if missing or --create passed) ------------------------------
 
-if [ ! -d "$VENV_DIR" ] || [ "${1:-}" = "--create" ]; then
-    echo "Creating virtual environment in '$VENV_DIR'..."
-    "$PYTHON" -m venv "$VENV_DIR" || die "Failed to create virtual environment."
+if [ ! -d "$venv_dir" ] || [ "${1:-}" = "--create" ]; then
+    echo "Creating virtual environment in '$venv_dir'..."
+
+    if ! "$python_bin" -m venv "$venv_dir"; then
+        echo "Error: Failed to create virtual environment." >&2
+        return 1
+    fi
 fi
 
-# -- Activate -----------------------------------------------------------------
+# -- Activate -------------------------------------------------------------------
 
-echo "Activating '$VENV_DIR'..."
-. "$VENV_DIR/bin/activate" || die "Failed to activate virtual environment."
+echo "Activating '$venv_dir'..."
 
-# -- Upgrade packaging tools --------------------------------------------------
+if ! . "$venv_dir/bin/activate"; then
+    echo "Error: Failed to activate virtual environment." >&2
+    return 1
+fi
+
+# -- Upgrade packaging tools ------------------------------------------------------
 
 echo "Upgrading pip, setuptools, wheel..."
-python -m pip install --upgrade --quiet pip setuptools wheel || die "Failed to upgrade packaging tools."
+
+if ! python -m pip install --upgrade --quiet pip setuptools wheel; then
+    echo "Error: Failed to upgrade packaging tools." >&2
+    return 1
+fi
 
 echo "Done. Python: $(python --version) | pip: $(pip --version | cut -d' ' -f1-2)"

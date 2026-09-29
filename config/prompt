@@ -19,19 +19,6 @@ _CLR_TIME=55
 
 PS1='%F{30}(%~)%f %$'
 
-# -- Git branch cache (updated on directory change, not every prompt) ---------
-
-_GIT_BRANCH=""
-
-chpwd() {
-    if git rev-parse --is-inside-work-tree &>/dev/null; then
-        _GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    else
-        _GIT_BRANCH=""
-    fi
-}
-chpwd   # initialise on shell start
-
 # -- Docker status cache (refreshed at most every 10 seconds) -----------------
 
 _DOCKER_STATUS=""
@@ -52,8 +39,9 @@ _get_docker_status() {
 _build_right_prompt() {
     local time="%F{$_CLR_TIME}($(date +"%H:%M:%S"))%f"
 
-    if [ -n "$_GIT_BRANCH" ]; then
-        echo "%F{$_CLR_BRANCH}($_GIT_BRANCH)%f $time"
+    branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [ -n "$branch" ]; then
+        echo "%F{$_CLR_BRANCH}($branch)%f $time"
     elif [ "$DOCKER_ENABLED" -eq 1 ]; then
         local docker_status
         docker_status=$(_get_docker_status)

@@ -1,6 +1,10 @@
 vim $DOTFILES_DIR/lists/git.txt                                                                 # EDIT
-sh $DOTFILES_DIR/scripts/git/fuzzy-checkout.sh                                                  # FUZZY CHECKOUT
+sh $DOTFILES_DIR/scripts/git/create-commit.sh                                                   # CREATE COMMIT
+sh $DOTFILES_DIR/scripts/git/swtich-branch.sh                                                   # SWITCH BRANCH
 sh $DOTFILES_DIR/scripts/git/check_git_status.sh                                                # CHECK GIT STATUS
+sh $DOTFILES_DIR/scripts/git/create-branch.sh                                                   # CREATE BRANCH
+sh $DOTFILES_DIR/scripts/git/rename-branch.sh                                                   # RENAME BRANCH
+git switch main && git pull                                                                     # SWITCH TO MAIN
 git diff --name-only | fzf --preview="bat --color=always {}"
 git diff --staged --name-only | fzf --preview="bat --color=always {}"
 git branch | fzf | xargs git checkout \n                                                        # CHECKOUT

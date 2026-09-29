@@ -1,70 +1,66 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # =============================================================================
 # check_git_status.sh
 # Description : Displays a formatted summary of the current git working tree.
+# Usage       : bash check_git_status.sh
 # Dependencies: git
-# Usage       : ./check_git_status.sh
 # =============================================================================
+
+set -euo pipefail
 
 # -- Colors (only when stdout is a terminal) ----------------------------------
 
 if [ -t 1 ]; then
-  bold=$'\e[1m'   dim=$'\e[2m'
-  red=$'\e[38;5;167m'  green=$'\e[38;5;108m'
-  yellow=$'\e[38;5;144m' blue=$'\e[38;5;68m'
-  reset=$'\e[0m'
+    bold=$'\e[1m'
+    dim=$'\e[2m'
+    red=$'\e[38;5;167m'
+    green=$'\e[38;5;108m'
+    yellow=$'\e[38;5;144m'
+    blue=$'\e[38;5;68m'
+    reset=$'\e[0m'
 else
-  bold='' dim='' red='' green='' yellow='' blue='' reset=''
+    bold='' dim='' red='' green='' yellow='' blue='' reset=''
 fi
 
-# -- Helpers ------------------------------------------------------------------
+separator="${dim}────────────────────────────────────────────────────────${reset}"
 
-# Count lines of output from a command
-count_lines() { "$@" 2>/dev/null | wc -l | tr -d ' '; }
+# -- Data collection ------------------------------------------------------------
 
-# Indent each line by two spaces
-indent() { sed 's/^/  /'; }
+staged_count=$(git diff --name-only --staged 2>/dev/null | wc -l | tr -d ' ')
+unstaged_count=$(git diff --name-only 2>/dev/null | wc -l | tr -d ' ')
+untracked_count=$(git ls-files --others --exclude-standard --directory 2>/dev/null | wc -l | tr -d ' ')
 
-SEPARATOR="${dim}────────────────────────────────────────────────────────${reset}"
-
-# -- Data collection ----------------------------------------------------------
-
-staged_count=$(count_lines   git diff --name-only --staged)
-unstaged_count=$(count_lines git diff --name-only)
-untracked_count=$(count_lines git ls-files --others --exclude-standard --directory)
-
-# -- Output -------------------------------------------------------------------
+# -- Output -----------------------------------------------------------------------
 
 # Staged
-printf '%s Staged changes (%s)%s\n' "${blue}${bold}" "$staged_count" "$reset"
+echo "${blue}${bold} Staged changes ($staged_count)${reset}"
 if [ "$staged_count" -eq 0 ]; then
-  printf '%sNo staged changes%s\n' "$dim" "$reset"
+    echo "${dim}No staged changes${reset}"
 else
-  git --no-pager diff --staged --stat --color=always | indent
+    git --no-pager diff --staged --stat --color=always | sed 's/^/  /'
 fi
 
 # Unstaged
-printf '\n%s Unstaged changes (%s)%s\n' "${yellow}${bold}" "$unstaged_count" "$reset"
+echo ""
+echo "${yellow}${bold} Unstaged changes ($unstaged_count)${reset}"
 if [ "$unstaged_count" -eq 0 ]; then
-  printf '%sNo unstaged changes%s\n' "$dim" "$reset"
+    echo "${dim}No unstaged changes${reset}"
 else
-  git --no-pager diff --stat --color=always | indent
+    git --no-pager diff --stat --color=always | sed 's/^/  /'
 fi
 
 # Untracked
-printf '\n%s Untracked files (%s)%s\n' "${green}${bold}" "$untracked_count" "$reset"
+echo ""
+echo "${green}${bold} Untracked files ($untracked_count)${reset}"
 if [ "$untracked_count" -eq 0 ]; then
-  printf '%sNo untracked files%s\n' "$dim" "$reset"
+    echo "${dim}No untracked files${reset}"
 else
-  git ls-files --others --exclude-standard --directory \
-    | sed "s|^|  ${red}?? |; s|$|${reset}|"
+    git ls-files --others --exclude-standard --directory \
+        | sed "s|^|  ${red}?? |; s|\$|${reset}|"
 fi
 
 # Summary
-printf '\n%s\n' "$SEPARATOR"
-printf '%sSummary:%s %s%s staged%s, %s%s unstaged%s, %s%s untracked%s\n' \
-  "$bold" "$reset" \
-  "$blue"   "$staged_count"   "$reset" \
-  "$yellow" "$unstaged_count" "$reset" \
-  "$green"  "$untracked_count" "$reset"
+echo ""
+echo "$separator"
+echo "${bold}Summary:${reset} ${blue}${staged_count} staged${reset}, ${yellow}${unstaged_count} unstaged${reset}, ${green}${untracked_count} untracked${reset}"
