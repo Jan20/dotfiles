@@ -4,6 +4,7 @@ lists/information.txt
 lists/notes.txt
 lists/spotify.txt
 lists/ingredients.txt
+lists/gcloud.txt
 .DS_Store
 .env
 .idea

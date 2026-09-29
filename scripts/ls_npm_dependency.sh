@@ -1,36 +1,45 @@
 #!/usr/bin/env bash
 
+# =============================================================================
+# ls_npm_dependency.sh
+# Description : Interactively selects a dependency from package.json and runs
+#               `npm ls` against it.
+# Usage       : bash ls_npm_dependency.sh
+# Dependencies: jq, fzf, npm
+# =============================================================================
+
 set -euo pipefail
 
+# -- Preflight ------------------------------------------------------------------
+
 for cmd in jq fzf npm; do
-  command -v "$cmd" >/dev/null 2>&1 || {
-    echo "Missing dependency: $cmd"
-    exit 1
-  }
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+        echo "Error: $cmd is required but not installed." >&2
+        exit 1
+    fi
 done
 
-if [[ ! -f package.json ]]; then
-  echo "package.json not found"
-  exit 1
+if [ ! -f package.json ]; then
+    echo "Error: package.json not found." >&2
+    exit 1
 fi
 
-DEPS=$(
-  jq -r '
-    .dependencies // {} + .devDependencies // {}
-    | keys[]
-  ' package.json
-)
+# -- List dependencies --------------------------------------------------------------
 
-if [[ -z "$DEPS" ]]; then
-  echo "No dependencies found in package.json"
-  exit 1
+deps=$(jq -r '.dependencies // {} + .devDependencies // {} | keys[]' package.json)
+
+if [ -z "$deps" ]; then
+    echo "Error: No dependencies found in package.json." >&2
+    exit 1
 fi
 
-SELECTED_DEP=$(echo "$DEPS" | sort | fzf --prompt="npm ls > ")
+# -- Select and inspect ---------------------------------------------------------------
 
-if [[ -z "$SELECTED_DEP" ]]; then
-  exit 0
+selected_dep=$(echo "$deps" | sort | fzf --prompt="npm ls > ")
+
+if [ -z "$selected_dep" ]; then
+    exit 0
 fi
 
-echo "▶ npm ls $SELECTED_DEP"
-npm ls "$SELECTED_DEP"
+echo "▶ npm ls $selected_dep"
+npm ls "$selected_dep"

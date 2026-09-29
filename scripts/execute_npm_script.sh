@@ -1,34 +1,49 @@
 #!/usr/bin/env bash
 
-set -e
+# =============================================================================
+# execute_npm_script.sh
+# Description : Interactively selects and runs an npm script from package.json.
+# Usage       : bash execute_npm_script.sh
+# Dependencies: jq, fzf, npm
+# =============================================================================
 
-# Ensure required tools exist
-command -v jq >/dev/null 2>&1 || { echo "jq is required"; exit 1; }
-command -v fzf >/dev/null 2>&1 || { echo "fzf is required"; exit 1; }
+set -euo pipefail
 
-# Ensure package.json exists
-if [[ ! -f package.json ]]; then
-  echo "package.json not found"
-  exit 1
+# -- Preflight ------------------------------------------------------------------
+
+if ! command -v jq >/dev/null 2>&1; then
+    echo "Error: jq is required but not installed." >&2
+    exit 1
 fi
 
-# Extract scripts as "name: command"
-SCRIPTS=$(jq -r '.scripts | to_entries[] | "\(.key): \(.value)"' package.json)
-
-if [[ -z "$SCRIPTS" ]]; then
-  echo "No scripts found in package.json"
-  exit 1
+if ! command -v fzf >/dev/null 2>&1; then
+    echo "Error: fzf is required but not installed." >&2
+    exit 1
 fi
 
-# Select script via fzf
-SELECTED=$(echo "$SCRIPTS" | fzf --prompt="npm script > ")
-
-if [[ -z "$SELECTED" ]]; then
-  exit 0
+if [ ! -f package.json ]; then
+    echo "Error: package.json not found." >&2
+    exit 1
 fi
 
-# Extract script name (before colon)
-SCRIPT_NAME="${SELECTED%%:*}"
+# -- List scripts -----------------------------------------------------------------
 
-echo "▶ Running: npm run $SCRIPT_NAME"
-npm run "$SCRIPT_NAME"
+scripts=$(jq -r '.scripts | to_entries[] | "\(.key): \(.value)"' package.json)
+
+if [ -z "$scripts" ]; then
+    echo "Error: No scripts found in package.json." >&2
+    exit 1
+fi
+
+# -- Select and run -----------------------------------------------------------------
+
+selected=$(echo "$scripts" | fzf --prompt="npm script > ")
+
+if [ -z "$selected" ]; then
+    exit 0
+fi
+
+script_name="${selected%%:*}"
+
+echo "▶ Running: npm run $script_name"
+npm run "$script_name"
